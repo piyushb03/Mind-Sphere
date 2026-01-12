@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="card">
+        <h2 style="margin-bottom: 2rem; border-bottom: 2px solid #eee; padding-bottom: 1rem;">My Assessment History</h2>
+        
+        {% if assessments %}
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr style="background: #f8fafc;">
+                        <th>Date Taken</th>
+                        <th>Risk Score</th>
+                        <th>Severity Level</th>
+                        <th>Key Metrics (Occ. / Indoors)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in assessments %}
+                    <tr>
+                        <td style="color: #64748b;">
+                            {{ item.date_posted.strftime('%Y-%m-%d') }}<br>
+                            <small>{{ item.date_posted.strftime('%H:%M') }}</small>
+                        </td>
+                        
+                        <td style="font-weight: 800; font-size: 1.1rem; color: var(--dark);">
+                            {{ "%.2f"|format(item.risk_score) }}
+                        </td>
+                        
+                        <td>
+                            <span class="badge badge-{{ item.risk_level }}">
+                                {{ item.risk_level }}
+                            </span>
+                        </td>
+                        
+                        <!-- UPDATED COLUMN: Shows real database fields -->
+                        <td style="font-size: 0.9rem;">
+                            <i class="fas fa-briefcase" style="color: var(--primary); margin-right: 5px;"></i> {{ item.occupation }} <br>
+                            <i class="fas fa-home" style="color: var(--text-gray); margin-right: 5px;"></i> {{ item.days_indoors }}
+                        </td>
+                        
+                        <td>
+                            <a href="{{ url_for('view_previous_result', assessment_id=item.id) }}" class="btn-primary" style="padding: 0.5rem 1rem; width: auto; font-size: 0.8rem; text-decoration: none; display: inline-block; margin-top: 0;">
+                                <i class="fas fa-file-pdf"></i> View Report
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <div style="text-align: center; padding: 3rem;">
+                <p style="color: #666; font-size: 1.2rem;">You haven't taken any assessments yet.</p>
+                <a href="{{ url_for('dashboard') }}" class="btn-primary" style="width: auto; display: inline-block; text-decoration: none;">Start First Check-up</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

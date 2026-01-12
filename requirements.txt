@@ -1,0 +1,15 @@
+flask
+flask-sqlalchemy
+flask-login
+flask-bcrypt
+xgboost
+shap
+pandas
+matplotlib
+email_validator
+pandas
+numpy
+scikit-learn
+authlib
+requests
+python-dotenv

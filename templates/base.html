@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindSphere - Mental Health AI</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='brain.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="/" class="brand">
+            <i class="fas fa-brain fa-lg"></i> MindSphere
+        </a>
+        <div class="nav-links">
+            {% if current_user.is_authenticated %}
+                <a href="/">Home</a>
+                <a href="{{ url_for('dashboard') }}">Assessment</a>
+                <a href="{{ url_for('history') }}">My History</a>
+                <span style="color: #cbd5e1;">|</span>
+                <span style="font-weight: 600; color: var(--primary);">{{ current_user.username }}</span>
+                <a href="{{ url_for('logout') }}" style="color: var(--danger);">Logout</a>
+            {% else %}
+                <a href="/">Home</a>
+                <a href="/#features">Features</a>
+                <a href="/#about">About</a>
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}" class="nav-btn">Get Started</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="container" style="padding-bottom: 0;">
+                    {% for category, message in messages %}
+                        <div style="padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; 
+                                    background: {{ '#dcfce7' if category == 'success' else '#fee2e2' }}; 
+                                    color: {{ '#166534' if category == 'success' else '#991b1b' }};">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="brand" style="margin-bottom: 1rem; color: white;">
+                    <i class="fas fa-brain"></i> MindSphere
+                </div>
+                <p>Empowering you with AI-driven insights for better mental wellness. Your journey to balance starts here.</p>
+                <div class="social-links" style="margin-top: 1.5rem;">
+                    <a href="https://www.linkedin.com/in/piyush-baghel/"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/piyushbaghel03/"><i class="fab fa-instagram"></i></a>
+                    <a href="mailto:mindsphere.work@gmail.com"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <a href="/">Home</a>
+                <a href="{{ url_for('register') }}">Take Assessment</a>
+                <a href="/#features">How it Works</a>
+                <a href="/#about">About Us</a>
+            </div>
+            <div class="footer-col">
+                <h3>Legal & Help</h3>
+                <a href="{{ url_for('legal') }}#privacy">Privacy Policy</a>
+                <a href="{{ url_for('legal') }}#terms">Terms of Service</a>
+                <a href="{{ url_for('legal') }}#disclaimer" style="color: #ef4444;">Medical Disclaimer</a>
+                <a href="/#feedback">Feedback</a>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 MindSphere Project. All Rights Reserved. Designed for Major Project.
+        </div>
+    </footer>
+
+</body>
+</html>

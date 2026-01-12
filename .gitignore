@@ -1,0 +1,27 @@
+# Ignore environment variables and secrets
+.env
+
+# Ignore local database files
+instance/
+*.db
+*.sqlite3
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore virtual environments
+venv/
+env/
+
+# Ignore package distribution folders
+build/
+dist/
+*.egg-info/
+
+# Ignore Jupyter Notebook checkpoints (if using notebooks)
+.ipynb_checkpoints/
+
+# Ignore test coverage and logs
+.coverage
+*.log

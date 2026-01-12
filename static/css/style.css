@@ -1,0 +1,337 @@
+:root {
+    --primary: #0d9488; /* Teal-600 */
+    --primary-dark: #0f766e;
+    --primary-light: #ccfbf1;
+    --secondary: #f59e0b; /* Amber-500 */
+    --accent: #6366f1; /* Indigo-500 */
+    --danger: #ef4444;
+    --dark: #1e293b;
+    --text-gray: #475569;
+    --light: #f8fafc;
+    --white: #ffffff;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+body {
+    background-color: var(--light);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--dark);
+    margin: 0;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Navbar */
+.navbar {
+    background: var(--white);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 70px;
+    box-sizing: border-box;
+}
+
+.brand {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 2001;
+}
+
+/* Desktop Nav Links */
+.nav-links { display: flex; align-items: center; gap: 2rem; }
+.nav-links a { text-decoration: none; color: var(--text-gray); font-weight: 500; transition: 0.2s; }
+.nav-links a:hover { color: var(--primary); }
+
+.nav-btn {
+    background: var(--primary);
+    color: white !important;
+    padding: 0.6rem 1.5rem;
+    border-radius: 99px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+.nav-btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+/* Hamburger Icon (Hidden in this version as we use bottom nav) */
+.hamburger { 
+    display: none; 
+}
+
+/* Layout & Sections */
+.main-content { flex: 1; }
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+.section { padding: 4rem 2rem; }
+.bg-white { background: var(--white); }
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 5rem 1rem;
+    background: linear-gradient(to bottom, var(--primary-light), var(--white));
+}
+.hero h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem; color: var(--dark); }
+.hero p { font-size: 1.25rem; color: var(--text-gray); max-width: 700px; margin: 0 auto 2.5rem; }
+
+/* Grid System */
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+/* Feature Cards */
+.feature-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid #e2e8f0;
+    transition: 0.3s;
+    text-align: center;
+}
+.feature-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+.icon-box {
+    width: 60px; height: 60px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin: 0 auto 1.5rem;
+}
+
+/* Forms & Inputs */
+.form-group { margin-bottom: 1.2rem; }
+input, select, textarea {
+    width: 100%; padding: 0.8rem; border: 1px solid #cbd5e1;
+    border-radius: 0.5rem; font-size: 1rem; transition: 0.2s; box-sizing: border-box; font-family: inherit;
+}
+input:focus, select:focus, textarea:focus {
+    outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Buttons */
+.btn-primary {
+    background: var(--primary);
+    color: white; 
+    border: 2px solid transparent; 
+    padding: 1rem 2rem; 
+    border-radius: 0.5rem;
+    font-size: 1.1rem; 
+    font-weight: 600; 
+    cursor: pointer; 
+    width: 100%; 
+    transition: 0.2s;
+    margin-top: 1rem;
+    box-sizing: border-box;
+}
+.btn-primary:hover { background: var(--primary-dark); }
+
+.btn-outline { 
+    background: transparent; 
+    border: 2px solid var(--primary); 
+    color: var(--primary); 
+    margin-top: 0; 
+}
+.btn-outline:hover { background: var(--primary-light); }
+
+/* Specific fix for Landing Page Buttons Container */
+.hero .btn-primary, .hero .btn-outline {
+    width: auto;      
+    margin-top: 0;    
+}
+
+/* Assessment Form */
+.question-card {
+    background: var(--white); border: 1px solid #e2e8f0; padding: 1.5rem;
+    border-radius: 0.75rem; margin-bottom: 1.5rem; position: relative; padding-left: 3.5rem;
+}
+.q-number {
+    position: absolute; left: 1rem; top: 1.5rem;
+    background: var(--primary-light); color: var(--primary-dark);
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem;
+}
+.question-card label { display: block; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--dark); }
+
+/* Results */
+.result-header { text-align: center; padding-bottom: 2rem; border-bottom: 2px dashed #e2e8f0; margin-bottom: 2rem; }
+.score-circle {
+    width: 150px; height: 150px; border-radius: 50%; border: 8px solid;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    margin: 0 auto 1rem; font-weight: 800; font-size: 3rem;
+}
+.advice-box { background: var(--primary-light); padding: 1.5rem; border-radius: 0.75rem; margin-top: 2rem; border-left: 5px solid var(--primary); }
+
+/* History Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+th, td {
+    padding: 1.25rem 1rem; /* Generous spacing for PC */
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+}
+
+/* Badge Utils */
+.badge { padding: 0.25rem 0.75rem; border-radius: 99px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; }
+.badge-Minimal { background: #dcfce7; color: #166534; }
+.badge-Moderate { background: #fef3c7; color: #92400e; }
+.badge-High { background: #fee2e2; color: #991b1b; }
+.text-center { text-align: center; }
+.card { background: white; padding: 2rem; border-radius: 1rem; box-shadow: var(--shadow-md); max-width: 800px; margin: 2rem auto; }
+
+/* Footer */
+.site-footer { background: var(--dark); color: #94a3b8; padding: 4rem 2rem 2rem; margin-top: auto; }
+.footer-grid {
+    max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem;
+}
+.footer-col h3 { color: white; margin-bottom: 1.5rem; }
+.footer-col a { display: block; color: #94a3b8; text-decoration: none; margin-bottom: 0.8rem; transition: 0.2s; }
+.footer-col a:hover { color: white; transform: translateX(5px); }
+.social-links a { display: inline-block; margin-right: 1rem; font-size: 1.2rem; }
+.copyright { text-align: center; border-top: 1px solid #334155; padding-top: 2rem; font-size: 0.9rem; }
+
+/* --- MOBILE OPTIMIZATION (Bottom Navbar) --- */
+@media (max-width: 768px) {
+    /* Adjust body padding so content isn't hidden behind bottom nav */
+    body {
+        padding-bottom: 70px;
+    }
+
+    /* Navbar: Keep Brand at top, hide links from top */
+    .navbar {
+        justify-content: center;
+        padding: 1rem;
+    }
+    
+    /* Move Nav Links to Bottom Fixed Bar */
+    .nav-links {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: var(--white);
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: space-around; /* Distribute items evenly */
+        align-items: center;
+        padding: 0.8rem 0;
+        z-index: 1000;
+        gap: 0; /* Remove default gap */
+        border-top: 1px solid #f1f5f9;
+        
+        /* Reset any sidebar transforms/positions */
+        top: auto;
+        right: auto;
+        height: auto;
+        flex-direction: row;
+    }
+
+    /* Style links to look good in a row */
+    .nav-links a {
+        font-size: 0.85rem;
+        color: var(--text-gray);
+        font-weight: 600;
+        text-align: center;
+        padding: 5px;
+        border: none;
+        width: auto;
+    }
+
+    /* Active/Hover state */
+    .nav-links a:hover {
+        color: var(--primary);
+    }
+    
+    /* Reset the "Get Started" button style to fit in the bottom bar */
+    .nav-btn {
+        background: transparent !important;
+        color: var(--primary) !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        width: auto;
+        margin-top: 0;
+    }
+
+    /* Ensure hamburger is hidden */
+    .hamburger { display: none !important; }
+
+    /* Hero Text Size adjustment */
+    .hero h1 { font-size: 2.2rem; }
+    
+    /* Footer Stacking */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+        display: flex;
+    }
+
+    /* Form Container adjustments */
+    .container { padding: 1rem; }
+    .card { padding: 1.5rem; }
+
+    /* Force Feedback Form to 1 column */
+    .grid-3[style] {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Table Adjustments for Mobile */
+    th, td {
+        padding: 1rem 0.5rem; /* Still spacious but slightly tighter horizontally */
+        font-size: 0.9rem;
+    }
+
+    /* --- FIX: RESULT PAGE BUTTONS ON MOBILE --- */
+    /* Targets buttons inside the no-print section in result.html */
+    .no-print .btn-primary, 
+    .no-print .btn-outline {
+        width: 100% !important;   /* Full width */
+        margin-right: 0 !important; /* Remove inline right margin */
+        margin-bottom: 1rem;      /* Add vertical spacing so they don't touch */
+        display: block;           /* Ensure block behavior for stacking */
+        box-sizing: border-box;
+    }
+}
+
+/* Print Styles */
+@media print {
+    body { background: white; color: black; }
+    .navbar, .site-footer, .no-print, .hamburger { display: none !important; }
+    .card { box-shadow: none; border: none; padding: 0; margin: 0; max-width: 100%; }
+    .score-circle { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

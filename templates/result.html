@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="card" id="printableArea">
+        
+        <!-- REPORT HEADER (Visible in PDF) -->
+        <div class="result-header">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="text-align: left;">
+                    <h2 style="color: var(--primary); margin: 0;">MindSphere <span style="color: black; font-weight: 300;">Report</span></h2>
+                    <p style="margin: 0; font-size: 0.9rem; color: #666;">AI-Powered Mental Health Assessment</p>
+                </div>
+                <div style="text-align: right; font-size: 0.9rem;">
+                    <p style="margin: 0;"><strong>User:</strong> {{ current_user.username }}</p>
+                    <p style="margin: 0;"><strong>Date:</strong> {{ timestamp }}</p>
+                    <p style="margin: 0;"><strong>Ref ID:</strong> #MS-{{ range(1000, 9999) | random }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN SCORE -->
+        <div class="text-center">
+            <h3 style="margin-bottom: 1rem;">Risk Analysis Result</h3>
+            
+            <div class="score-circle" style="border-color: var(--{{ result.color }}); color: var(--{{ result.color }});">
+                {{ result.score }}
+                <span style="font-size: 1rem; font-weight: 600; color: #666;">RISK SCORE</span>
+            </div>
+            
+            <div class="badge badge-{{ result.level }}" style="font-size: 1.2rem; padding: 0.5rem 1.5rem;">
+                {{ result.level }} SEVERITY
+            </div>
+            
+            <p style="font-size: 1.1rem; max-width: 600px; margin: 1.5rem auto;">
+                {{ result.message }}
+            </p>
+        </div>
+
+        <!-- DETAILED ADVICE SECTION -->
+        <div class="advice-box">
+            <h3 style="color: var(--primary-dark); margin-top: 0;"><i class="fas fa-user-md"></i> Recommended Actions</h3>
+            <ul style="padding-left: 1.2rem; margin-bottom: 0;">
+                {% if result.score < 30 %}
+                    <li><strong>Maintenance:</strong> Continue your current routine. Your responses indicate a balanced state.</li>
+                    <li><strong>Proactive:</strong> Consider mindfulness apps to maintain this balance during future stress.</li>
+                    <li><strong>Social:</strong> Keep engaging with your friends and family regularly.</li>
+                {% elif result.score < 60 %}
+                    <li><strong>Stress Management:</strong> You are showing signs of strain. Try the 'Pomodoro technique' for work breaks.</li>
+                    <li><strong>Monitor Habits:</strong> Watch for changes in sleep or appetite, as these are early warning signs.</li>
+                    <li><strong>Activity:</strong> Ensure you get at least 30 mins of walking daily to clear your mind.</li>
+                {% else %}
+                    <li><strong>Professional Help:</strong> We strongly recommend consulting a therapist or counselor.</li>
+                    <li><strong>Immediate Relief:</strong> Practice 'Box Breathing' (Inhale 4s, Hold 4s, Exhale 4s).</li>
+                    <li><strong>Support:</strong> Do not isolate yourself. Talk to a trusted family member immediately.</li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 2rem 0;">
+
+        <!-- CHARTS & DATA -->
+        <div class="grid-3" style="grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 0;">
+            <div>
+                <h4 style="margin-top: 0;">Contributing Factors (SHAP)</h4>
+                <p style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">
+                    Red bars pushed your risk score UP. Blue bars pulled it DOWN.
+                </p>
+                <!-- Check if plot_url exists before displaying -->
+                {% if plot_url %}
+                    <img src="data:image/png;base64,{{ plot_url }}" style="width: 100%; border-radius: 8px; border: 1px solid #eee;">
+                {% else %}
+                    <div style="padding: 20px; background: #f8f9fa; text-align: center; border-radius: 8px;">
+                        Plot not available for this entry.
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- FIXED DATA SUMMARY TABLE -->
+            <div>
+                <h4 style="margin-top: 0;">Profile Summary</h4>
+                <table style="width: 100%; font-size: 0.9rem;">
+                    <!-- Row 1 -->
+                    <tr>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">Age / Gender</td>
+                        <td style="text-align: right;"><b>{{ input.Age }} / {{ input.Gender }}</b></td>
+                    </tr>
+                    <!-- Row 2 -->
+                    <tr>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">Occupation</td>
+                        <td style="text-align: right;"><b>{{ input.Occupation }}</b></td>
+                    </tr>
+                    <!-- Row 3 -->
+                    <tr>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">Days Indoors</td>
+                        <td style="text-align: right;"><b>{{ input.Days_Indoors }}</b></td>
+                    </tr>
+                    <!-- Row 4 -->
+                    <tr>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">Growing Stress</td>
+                        <td style="text-align: right;">
+                            <span class="badge" style="background: {{ '#fee2e2' if input.Growing_Stress == 'Yes' else '#f1f5f9' }};">
+                                {{ input.Growing_Stress }}
+                            </span>
+                        </td>
+                    </tr>
+                    <!-- Row 5 -->
+                    <tr>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">Mood Swings</td>
+                        <td style="text-align: right;"><b>{{ input.Mood_Swings }}</b></td>
+                    </tr>
+                    <!-- Row 6 -->
+                    <tr>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">Family History</td>
+                        <td style="text-align: right;"><b>{{ input.family_history }}</b></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div style="background: #f1f5f9; padding: 1rem; border-radius: 0.5rem; margin-top: 2rem; font-size: 0.8rem; text-align: center; color: #64748b;">
+            <strong>Medical Disclaimer:</strong> This report is generated by an AI model and is for informational purposes only. It is not a clinical diagnosis.
+        </div>
+    </div>
+
+    <!-- ACTION BUTTONS (Hidden in Print) -->
+    <div class="text-center no-print" style="margin-top: 2rem; margin-bottom: 4rem;">
+        <button onclick="window.print()" class="btn-primary" style="width: auto; margin-right: 1rem;">
+            <i class="fas fa-print"></i> Download PDF Report
+        </button>
+        <a href="{{ url_for('dashboard') }}" class="btn-primary btn-outline" style="width: auto; display: inline-block; text-decoration: none;">
+            Take New Assessment
+        </a>
+    </div>
+
+    <!-- POST-RESULT FEEDBACK -->
+    <div class="card no-print" style="text-align: center; background: var(--primary-light);">
+        <h3>Was this result accurate?</h3>
+        <p>Your feedback helps train our model.</p>
+        <form action="{{ formspree_endpoint }}" method="POST" style="max-width: 500px; margin: 0 auto;">
+            <input type="hidden" name="subject" value="Result Feedback">
+            <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 1rem;">
+                <button type="submit" name="rating" value="Accurate" class="btn-primary" style="background: var(--white); color: var(--primary); width: auto; margin-top: 0;">👍 Yes</button>
+                <button type="submit" name="rating" value="Inaccurate" class="btn-primary" style="background: var(--white); color: var(--danger); width: auto; margin-top: 0;">👎 No</button>
+            </div>
+            <textarea name="comments" placeholder="Optional comments..." style="width: 100%; margin-bottom: 1rem;" rows="2"></textarea>
+        </form>
+    </div>
+</div>
+{% endblock %}

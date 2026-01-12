@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container" style="max-width: 800px;">
+    <div class="text-center" style="margin-bottom: 3rem;">
+        <h1 style="margin-bottom: 0.5rem;">Mental Wellness Assessment</h1>
+        <p style="color: var(--text-gray);">Please answer honestly. Your data is analyzed by our advanced XGBoost Model.</p>
+    </div>
+
+    <form method="POST">
+        
+        <!-- Section 1: Demographics -->
+        <h3 style="color: var(--primary); margin-bottom: 1rem; border-bottom: 2px solid var(--primary-light); padding-bottom: 0.5rem;">1. Personal Details</h3>
+        
+        <!-- NEW AGE QUESTION -->
+        <div class="question-card">
+            <div class="q-number">1</div>
+            <label>What is your Age?</label>
+            <input type="number" name="age" required min="10" max="100" placeholder="e.g. 25">
+        </div>
+
+        <div class="question-card">
+            <div class="q-number">2</div>
+            <label>Gender</label>
+            <select name="gender" required>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="question-card">
+            <div class="q-number">3</div>
+            <label>Country of Residence</label>
+            <select name="country" required>
+                <option value="United States">United States</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="Canada">Canada</option>
+                <option value="India">India</option>
+                <option value="Australia">Australia</option>
+                <option value="France">France</option>
+                <option value="Germany">Germany</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="question-card">
+            <div class="q-number">4</div>
+            <label>Occupation Type</label>
+            <select name="occupation" required>
+                <option value="Corporate">Corporate</option>
+                <option value="Student">Student</option>
+                <option value="Business">Business</option>
+                <option value="Housewife">Housewife</option>
+                <option value="Others">Others</option>
+            </select>
+        </div>
+
+        <div class="question-card">
+            <div class="q-number">5</div>
+            <label>Are you self-employed?</label>
+            <select name="self_employed" required>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
+
+        <!-- Section 2: Lifestyle & History -->
+        <h3 style="color: var(--primary); margin-top: 3rem; margin-bottom: 1rem; border-bottom: 2px solid var(--primary-light); padding-bottom: 0.5rem;">2. Lifestyle & History</h3>
+
+        <div class="question-card">
+            <div class="q-number">6</div>
+            <label>Family History of Mental Illness?</label>
+            <select name="family_history" required>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
+
+        <div class="question-card">
+            <div class="q-number">7</div>
+            <label>How often do you stay indoors?</label>
+            <select name="days_indoors" required>
+                <option value="1-14 days">1-14 days</option>
+                <option value="15-30 days">15-30 days</option>
+                <option value="31-60 days">31-60 days</option>
+                <option value="More than 2 months">More than 2 months</option>
+                <option value="Go out Every day">Go out Every day</option>
+            </select>
+        </div>
+        
+        <div class="question-card">
+            <div class="q-number">8</div>
+            <label>Have you noticed growing stress recently?</label>
+            <select name="growing_stress" required>
+                <option value="No">No</option>
+                <option value="Maybe">Maybe</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
+
+        <div class="question-card">
+            <div class="q-number">9</div>
+            <label>Have you changed your habits (sleep/eating) lately?</label>
+            <select name="changes_habits" required>
+                <option value="No">No</option>
+                <option value="Maybe">Maybe</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
+
+        <!-- Section 3: Psychological Indicators -->
+        <h3 style="color: var(--primary); margin-top: 3rem; margin-bottom: 1rem; border-bottom: 2px solid var(--primary-light); padding-bottom: 0.5rem;">3. Emotional Well-being</h3>
+
+        <div class="question-card">
+            <div class="q-number">10</div>
+            <label>Do you have a past history of mental health issues?</label>
+            <select name="mental_health_history" required>
+                <option value="No">No</option>
+                <option value="Maybe">Maybe</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
+
+        <div class="question-card">
+            <div class="q-number">11</div>
+            <label>How intense are your mood swings?</label>
+            <select name="mood_swings" required>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+        </div>
+
+        <div class="question-card">
+            <div class="q-number">12</div>
+            <label>Do you struggle with coping with daily problems?</label>
+            <select name="coping_struggles" required>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
+
+        <div class="question-card">
+            <div class="q-number">13</div>
+            <label>Is your work interest declining?</label>
+            <select name="work_interest" required>
+                <option value="No">No</option>
+                <option value="Maybe">Maybe</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
+
+        <div class="question-card">
+            <div class="q-number">14</div>
+            <label>Do you feel weak in social interactions?</label>
+            <select name="social_weakness" required>
+                <option value="No">No</option>
+                <option value="Maybe">Maybe</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
+
+        <div class="question-card">
+            <div class="q-number">15</div>
+            <label>Would you be willing to bring this up in an interview?</label>
+            <select name="mental_health_interview" required>
+                <option value="No">No</option>
+                <option value="Maybe">Maybe</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
+
+        <div class="question-card">
+            <div class="q-number">16</div>
+            <label>Are you aware of mental health care options?</label>
+            <select name="care_options" required>
+                <option value="No">No</option>
+                <option value="Not sure">Not sure</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn-primary" style="margin-top: 2rem; margin-bottom: 2rem;">
+            <i class="fas fa-chart-line"></i> Generate AI Analysis
+        </button>
+    </form>
+</div>
+{% endblock %}
