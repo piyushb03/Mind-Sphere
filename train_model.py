@@ -16,3 +16,21 @@ def train():
     y = df['treatment'].map({'Yes': 1, 'No': 0})
     X = df.drop('treatment', axis=1)
     
+    # 3. Time-based Feature Engineering (Crucial for >0.9 F1)
+    X['Timestamp'] = pd.to_datetime(X['Timestamp'], format='mixed')
+    X['Year'] = X['Timestamp'].dt.year
+    X['Month'] = X['Timestamp'].dt.month
+    X['Day'] = X['Timestamp'].dt.day
+    X['Hour'] = X['Timestamp'].dt.hour
+    X = X.drop('Timestamp', axis=1)
+
+    # 4. Imputing and Standardizing Strings
+    for col in X.columns:
+        if X[col].dtype == object:
+            X[col] = X[col].fillna('Missing').astype(str)
+
+    # 5. Train/Test Split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    cat_features = [col for col in X.columns if X[col].dtype == object]
+    
+    encoders = {}
