@@ -34,3 +34,21 @@ def train():
     cat_features = [col for col in X.columns if X[col].dtype == object]
     
     encoders = {}
+    for col in cat_features:
+        le = LabelEncoder()
+        # Ensure we fit on the entire X column to know all classes.
+        le.fit(X[col])
+        encoders[col] = le
+        
+    model = CatBoostClassifier(iterations=500, 
+                               cat_features=cat_features, 
+                               verbose=50, 
+                               random_state=42,
+                               early_stopping_rounds=50)
+    
+    model.fit(X_train, y_train, eval_set=(X_test, y_test))
+    
+    y_pred = model.predict(X_test)
+    f1 = f1_score(y_test, y_pred)
+    acc = accuracy_score(y_test, y_pred)
+
