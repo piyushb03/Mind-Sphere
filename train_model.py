@@ -52,3 +52,21 @@ def train():
     f1 = f1_score(y_test, y_pred)
     acc = accuracy_score(y_test, y_pred)
 
+    print(f"\nFinal Optimized F1 Score: {f1:.4f}")
+    print(f"Final Optimized Accuracy: {acc:.4f}")
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+    
+    # Ensure models dir exists
+    os.makedirs('models', exist_ok=True)
+    
+    with open('models/final_model.pkl', 'wb') as f:
+        pickle.dump(model, f)
+        
+    with open('models/encoders.pkl', 'wb') as f:
+        pickle.dump(encoders, f)
+        
+    print("\nSaved final_model.pkl and encoders.pkl in models/ directory.")
+
+if __name__ == '__main__':
+    train()
