@@ -38,3 +38,23 @@ class MentalHealthPredictor:
                 self.feature_names = [
                     'Gender', 'Country', 'Occupation', 'self_employed', 'family_history',
                     'Days_Indoors', 'Growing_Stress', 'Changes_Habits', 'Mental_Health_History',
+                    'Mood_Swings', 'Coping_Struggles', 'Work_Interest', 'Social_Weakness',
+                    'mental_health_interview', 'care_options'
+                ]
+            
+            # Initialize SHAP explainer
+            try:
+                self.explainer = shap.TreeExplainer(self.model)
+            except Exception as e:
+                print(f"SHAP Warning: {e}")
+            
+            print("Real XGBoost Model Loaded Successfully.")
+        else:
+            print(f"WARNING: Model files not found at {model_path}. Please run train_model.py and move files to 'models/' folder.")
+
+    def preprocess_input(self, input_data):
+        """
+        Converts raw text input into numbers using the saved encoders.
+        """
+        processed_data = {}
+        
