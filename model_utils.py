@@ -58,3 +58,23 @@ class MentalHealthPredictor:
         """
         processed_data = {}
         
+        # We must iterate through the features in the exact order the model expects
+        for col in self.feature_names:
+            raw_val = input_data.get(col)
+            
+            # Handle standard cleaning matching training script
+            if col == 'Gender':
+                raw_val = str(raw_val).lower().strip()
+                if raw_val in ['male', 'm', 'man', 'cis male']: raw_val = 'Male'
+                elif raw_val in ['female', 'f', 'woman', 'cis female']: raw_val = 'Female'
+                else: raw_val = 'Other'
+
+            # Encode
+            encoder = self.encoders.get(col)
+            if encoder:
+                try:
+                    # Transform using the encoder
+                    processed_val = encoder.transform([str(raw_val)])[0]
+                except (ValueError, AttributeError, IndexError):
+                    # Robust fallback for unseen values (defaults to 0 or most common)
+                    # print(f"Warning: Unseen label '{raw_val}' for column '{col}'. Using default.")
