@@ -78,3 +78,23 @@ class MentalHealthPredictor:
                 except (ValueError, AttributeError, IndexError):
                     # Robust fallback for unseen values (defaults to 0 or most common)
                     # print(f"Warning: Unseen label '{raw_val}' for column '{col}'. Using default.")
+                    processed_val = 0
+            else:
+                processed_val = 0
+            
+            processed_data[col] = processed_val
+            
+        return pd.DataFrame([processed_data], columns=self.feature_names)
+
+    def predict_risk(self, input_data):
+        if not self.model:
+            return {"score": 0, "level": "Error", "color": "dark", "message": "Model not loaded."}
+
+        # 1. Preprocess
+        data_df = self.preprocess_input(input_data)
+        
+        # 2. Predict Probability (Risk Score)
+        # Class 1 is usually "Yes" (Needs treatment)
+        try:
+            prob = self.model.predict_proba(data_df)[0][1] 
+            risk_score = round(prob * 100, 2)
