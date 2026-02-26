@@ -98,3 +98,23 @@ class MentalHealthPredictor:
         try:
             prob = self.model.predict_proba(data_df)[0][1] 
             risk_score = round(prob * 100, 2)
+        except Exception as e:
+            print(f"Prediction Error: {e}")
+            risk_score = 50 # Default fallback
+        
+        # 3. Determine Level
+        if risk_score < 30:
+            level, color, msg = "Minimal", "success", "Your responses suggest a healthy mental state."
+        elif risk_score < 60:
+            level, color, msg = "Moderate", "warning", "You are showing signs of stress. Monitoring is advised."
+        else:
+            level, color, msg = "High", "danger", "High probability of needing support. Professional consultation recommended."
+
+        return {
+            "score": risk_score,
+            "level": level,
+            "color": color,
+            "message": msg
+        }
+
+    def generate_shap_plot(self, input_data):
