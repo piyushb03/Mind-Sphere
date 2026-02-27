@@ -118,3 +118,23 @@ class MentalHealthPredictor:
         }
 
     def generate_shap_plot(self, input_data):
+        if not self.model or not self.explainer: return ""
+        
+        try:
+            data_df = self.preprocess_input(input_data)
+            shap_values = self.explainer.shap_values(data_df)
+            
+            plt.figure(figsize=(10, 5))
+            
+            # Create a simple bar chart of feature importance for this specific prediction
+            # We match features to their SHAP impact
+            if isinstance(shap_values, list): # Handling different SHAP versions
+                vals = shap_values[0]
+            else:
+                vals = shap_values[0]
+
+            feature_importance = pd.DataFrame(list(zip(self.feature_names, vals)), columns=['feature', 'value'])
+            feature_importance['abs_value'] = feature_importance['value'].abs()
+            
+            # Plot top 7 most influential factors
+            top_features = feature_importance.sort_values(by='abs_value', ascending=True).tail(7)
