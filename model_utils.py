@@ -138,3 +138,21 @@ class MentalHealthPredictor:
             
             # Plot top 7 most influential factors
             top_features = feature_importance.sort_values(by='abs_value', ascending=True).tail(7)
+            
+            colors = ['#ef4444' if x > 0 else '#0d9488' for x in top_features['value']]
+            
+            top_features.plot(kind='barh', x='feature', y='value', color=colors, legend=False)
+            plt.title("Factors Influencing Your Result (Red=Risk, Teal=Safety)")
+            plt.xlabel("Impact on Risk Score")
+            plt.tight_layout()
+            
+            buf = io.BytesIO()
+            plt.savefig(buf, format='png', bbox_inches='tight', dpi=100, transparent=True)
+            plt.close()
+            buf.seek(0)
+            return base64.b64encode(buf.getvalue()).decode('utf-8')
+        except Exception as e:
+            print(f"SHAP Plot Error: {e}")
+            return ""
+
+engine = MentalHealthPredictor()
