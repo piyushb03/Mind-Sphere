@@ -13,3 +13,23 @@ load_dotenv()
 
 app = Flask(__name__)
 
+# 2. Config - Use environment variables or fallbacks
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-key-fallback-123')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Google OAuth Keys (Loaded from .env)
+app.config['GOOGLE_CLIENT_ID'] = os.getenv('GOOGLE_CLIENT_ID')
+app.config['GOOGLE_CLIENT_SECRET'] = os.getenv('GOOGLE_CLIENT_SECRET')
+
+# 3. Initialize Extensions
+db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+login_manager.login_message_category = 'info'
+
+# 4. OAuth Setup (The missing part that caused the error)
+oauth = OAuth(app)
+google = oauth.register(
+    name='google',
