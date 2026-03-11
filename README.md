@@ -8,7 +8,7 @@ MindSphere is a web application that assesses mental health risk based on lifest
 
 ## 🌟 Features
 
-- **Advanced AI Engine**: XGBoost classifier with SMOTE for class imbalance handling
+- **Advanced AI Engine**: XGBoost classifier 
 - **SHAP Explainability**: Shapley Additive Explanations for feature importance visualization
 - **Dynamic Dashboard**: Real-time assessment form mapped to model features
 - **Secure Authentication**: Hashed passwords and Google OAuth 2.0 integration
