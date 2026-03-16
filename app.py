@@ -53,3 +53,23 @@ def inject_globals():
 # --- Models (Unchanged) ---
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(60), nullable=False)
+    assessments = db.relationship('Assessment', backref='author', lazy=True)
+
+class Assessment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    risk_score = db.Column(db.Float, nullable=False)
+    risk_level = db.Column(db.String(20), nullable=False)
+    
+    age = db.Column(db.Integer)
+    # Fields matching Survey.csv
+    gender = db.Column(db.String(20))
+    country = db.Column(db.String(50))
+    occupation = db.Column(db.String(50))
+    self_employed = db.Column(db.String(10))
+    family_history = db.Column(db.String(10))
+    days_indoors = db.Column(db.String(50))
+    growing_stress = db.Column(db.String(50))
