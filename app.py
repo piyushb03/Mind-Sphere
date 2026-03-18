@@ -73,3 +73,23 @@ class Assessment(db.Model):
     family_history = db.Column(db.String(10))
     days_indoors = db.Column(db.String(50))
     growing_stress = db.Column(db.String(50))
+    changes_habits = db.Column(db.String(10))
+    mental_health_history = db.Column(db.String(10))
+    mood_swings = db.Column(db.String(20))
+    coping_struggles = db.Column(db.String(10))
+    work_interest = db.Column(db.String(20))
+    social_weakness = db.Column(db.String(10))
+    mental_health_interview = db.Column(db.String(10))
+    care_options = db.Column(db.String(20))
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+# --- Routes ---
+
+@app.route("/")
+def index():
+    return render_template('index.html')
