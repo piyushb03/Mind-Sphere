@@ -93,3 +93,23 @@ def load_user(user_id):
 @app.route("/")
 def index():
     return render_template('index.html')
+
+@app.route("/legal")
+def legal():
+    return render_template('legal.html')
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
+    if request.method == 'POST':
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        terms = request.form.get('terms')
+        
+        if not terms:
+            flash('Please accept the Terms of Service.', 'danger')
+            return redirect(url_for('register'))
+
+        if User.query.filter_by(email=email).first():
