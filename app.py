@@ -133,3 +133,28 @@ def login():
         password = request.form.get('password')
         user = User.query.filter_by(email=email).first()
         if user and user.password != 'google-oauth' and bcrypt.check_password_hash(user.password, password):
+            login_user(user)
+            return redirect(url_for('dashboard'))
+        elif user and user.password == 'google-oauth':
+             flash('Please sign in with Google.', 'info')
+        else:
+            flash('Login unsuccessful. Check email and password.', 'danger')
+    return render_template('login.html')
+
+# --- Google OAuth Routes (The Fix) ---
+@app.route('/login/google')
+def google_login():
+    return google.authorize_redirect(redirect_uri=url_for('google_callback', _external=True))
+
+@app.route('/google/callback')
+def google_callback():
+    try:
+        token = google.authorize_access_token()
+        user_info = google.get('https://www.googleapis.com/oauth2/v2/userinfo').json()
+        
+        email = user_info['email']
+        name = user_info['name']
+        
+        user = User.query.filter_by(email=email).first()
+        
+        if not user:
