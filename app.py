@@ -158,3 +158,28 @@ def google_callback():
         user = User.query.filter_by(email=email).first()
         
         if not user:
+            # Create user automatically if they don't exist
+            user = User(username=name, email=email, password='google-oauth')
+            db.session.add(user)
+            db.session.commit()
+        
+        login_user(user)
+        return redirect(url_for('dashboard'))
+    except Exception as e:
+        flash(f'Google Login Failed: {str(e)}', 'danger')
+        return redirect(url_for('login'))
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+@app.route("/dashboard", methods=['GET', 'POST'])
+@login_required
+def dashboard():
+    if request.method == 'POST':
+        try:
+            # Capture Age separately
+            age_input = request.form.get('age')
+
+            # Gather inputs - Keys MUST match model_utils feature names
