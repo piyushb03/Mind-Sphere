@@ -183,3 +183,28 @@ def dashboard():
             age_input = request.form.get('age')
 
             # Gather inputs - Keys MUST match model_utils feature names
+            input_data = {
+                'Gender': request.form.get('gender'),
+                'Country': request.form.get('country'),
+                'Occupation': request.form.get('occupation'),
+                'self_employed': request.form.get('self_employed'),
+                'family_history': request.form.get('family_history'),
+                'Days_Indoors': request.form.get('days_indoors'),
+                'Growing_Stress': request.form.get('growing_stress'),
+                'Changes_Habits': request.form.get('changes_habits'),
+                'Mental_Health_History': request.form.get('mental_health_history'),
+                'Mood_Swings': request.form.get('mood_swings'),
+                'Coping_Struggles': request.form.get('coping_struggles'),
+                'Work_Interest': request.form.get('work_interest'),
+                'Social_Weakness': request.form.get('social_weakness'),
+                'mental_health_interview': request.form.get('mental_health_interview'),
+                'care_options': request.form.get('care_options')
+            }
+            
+            # Predict
+            result = engine.predict_risk(input_data)
+            shap_plot = engine.generate_shap_plot(input_data)
+            
+            # Save to DB
+            assessment = Assessment(
+                risk_score=result['score'],
