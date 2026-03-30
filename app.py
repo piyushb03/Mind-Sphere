@@ -208,3 +208,28 @@ def dashboard():
             # Save to DB
             assessment = Assessment(
                 risk_score=result['score'],
+                risk_level=result['level'],
+                author=current_user,
+                age=age_input,
+                gender=input_data['Gender'],
+                country=input_data['Country'],
+                occupation=input_data['Occupation'],
+                self_employed=input_data['self_employed'],
+                family_history=input_data['family_history'],
+                days_indoors=input_data['Days_Indoors'],
+                growing_stress=input_data['Growing_Stress'],
+                changes_habits=input_data['Changes_Habits'],
+                mental_health_history=input_data['Mental_Health_History'],
+                mood_swings=input_data['Mood_Swings'],
+                coping_struggles=input_data['Coping_Struggles'],
+                work_interest=input_data['Work_Interest'],
+                social_weakness=input_data['Social_Weakness'],
+                mental_health_interview=input_data['mental_health_interview'],
+                care_options=input_data['care_options']
+            )
+            db.session.add(assessment)
+            db.session.commit()
+            
+            # Add Age to input_data for display
+            input_data['Age'] = age_input
+
