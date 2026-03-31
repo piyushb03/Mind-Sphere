@@ -233,3 +233,28 @@ def dashboard():
             # Add Age to input_data for display
             input_data['Age'] = age_input
 
+            return render_template('result.html', result=result, plot_url=shap_plot, input=input_data, timestamp=datetime.now().strftime("%Y-%m-%d %H:%M"))
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+            print(f"DEBUG ERROR: {e}")
+            
+    return render_template('dashboard.html')
+
+@app.route("/history")
+@login_required
+def history():
+    assessments = Assessment.query.filter_by(author=current_user).order_by(Assessment.date_posted.desc()).all()
+    return render_template('history.html', assessments=assessments)
+
+@app.route("/assessment/<int:assessment_id>")
+@login_required
+def view_previous_result(assessment_id):
+    assessment = Assessment.query.get_or_404(assessment_id)
+    if assessment.author != current_user:
+        abort(403)
+        
+    input_data = {
+        'Age': assessment.age,
+        'Gender': assessment.gender,
+        'Country': assessment.country,
+        'Occupation': assessment.occupation,
