@@ -258,3 +258,27 @@ def view_previous_result(assessment_id):
         'Gender': assessment.gender,
         'Country': assessment.country,
         'Occupation': assessment.occupation,
+        'self_employed': assessment.self_employed,
+        'family_history': assessment.family_history,
+        'Days_Indoors': assessment.days_indoors,
+        'Growing_Stress': assessment.growing_stress,
+        'Changes_Habits': assessment.changes_habits,
+        'Mental_Health_History': assessment.mental_health_history,
+        'Mood_Swings': assessment.mood_swings,
+        'Coping_Struggles': assessment.coping_struggles,
+        'Work_Interest': assessment.work_interest,
+        'Social_Weakness': assessment.social_weakness,
+        'mental_health_interview': assessment.mental_health_interview,
+        'care_options': assessment.care_options
+    }
+    
+    result = engine.predict_risk(input_data)
+    shap_plot = engine.generate_shap_plot(input_data)
+    
+    return render_template('result.html', result=result, plot_url=shap_plot, input=input_data, timestamp=assessment.date_posted.strftime("%Y-%m-%d %H:%M"))
+
+with app.app_context():
+    db.create_all()
+
+if __name__ == '__main__':
+    app.run(debug=True)
