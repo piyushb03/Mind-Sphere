@@ -33,3 +33,43 @@ cd MindSphere
 
 ### 2. Create Virtual Environment
 ```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure Environment
+Create `.env`:
+```
+SECRET_KEY=your_secret_key_here
+GOOGLE_CLIENT_ID=your_client_id
+GOOGLE_CLIENT_SECRET=your_client_secret
+FORMSPREE_ENDPOINT=https://formspree.io/f/your_form_id
+```
+
+### 5. Run Application
+```bash
+python app.py
+```
+Visit `http://127.0.0.1:5000`
+
+
+## 📂 Project Structure
+
+```
+MindSphere/
+├── app.py                 # Flask entry point
+├── model_utils.py         # AI logic and SHAP visualization
+├── train_model.py         # Model training script
+├── requirements.txt       # Dependencies
+├── .env                   # Environment variables (gitignored)
+├── models/                # Serialized models
