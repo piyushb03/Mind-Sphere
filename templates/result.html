@@ -132,18 +132,5 @@
         </a>
     </div>
 
-    <!-- POST-RESULT FEEDBACK -->
-    <div class="card no-print" style="text-align: center; background: var(--primary-light);">
-        <h3>Was this result accurate?</h3>
-        <p>Your feedback helps train our model.</p>
-        <form action="{{ formspree_endpoint }}" method="POST" style="max-width: 500px; margin: 0 auto;">
-            <input type="hidden" name="subject" value="Result Feedback">
-            <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 1rem;">
-                <button type="submit" name="rating" value="Accurate" class="btn-primary" style="background: var(--white); color: var(--primary); width: auto; margin-top: 0;">👍 Yes</button>
-                <button type="submit" name="rating" value="Inaccurate" class="btn-primary" style="background: var(--white); color: var(--danger); width: auto; margin-top: 0;">👎 No</button>
-            </div>
-            <textarea name="comments" placeholder="Optional comments..." style="width: 100%; margin-bottom: 1rem;" rows="2"></textarea>
-        </form>
-    </div>
 </div>
 {% endblock %}
