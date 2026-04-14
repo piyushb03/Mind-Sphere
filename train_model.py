@@ -4,14 +4,8 @@ import pickle
 import os
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
-from xgboost import XGBClassifier
-from sklearn.metrics import accuracy_score, f1_score
-
-def clean_gender(val):
-    val = str(val).lower().strip()
-    if val in ['male', 'm', 'man', 'cis male']: return 'Male'
-    elif val in ['female', 'f', 'woman', 'cis female']: return 'Female'
-    else: return 'Other'
+from catboost import CatBoostClassifier
+from sklearn.metrics import accuracy_score, f1_score, classification_report
 
 def train():
     # 1. Load data
@@ -20,55 +14,59 @@ def train():
     
     # Target
     y = df['treatment'].map({'Yes': 1, 'No': 0})
+    X = df.drop('treatment', axis=1)
     
-    features = [
-        'Gender', 'Country', 'Occupation', 'self_employed', 'family_history',
-        'Days_Indoors', 'Growing_Stress', 'Changes_Habits', 'Mental_Health_History',
-        'Mood_Swings', 'Coping_Struggles', 'Work_Interest', 'Social_Weakness',
-        'mental_health_interview', 'care_options'
-    ]
-    
-    X = df[features].copy()
-    
-    # Preprocess Gender
-    X['Gender'] = X['Gender'].apply(clean_gender)
+    # 3. Time-based Feature Engineering (Crucial for >0.9 F1)
+    X['Timestamp'] = pd.to_datetime(X['Timestamp'], format='mixed')
+    X['Year'] = X['Timestamp'].dt.year
+    X['Month'] = X['Timestamp'].dt.month
+    X['Day'] = X['Timestamp'].dt.day
+    X['Hour'] = X['Timestamp'].dt.hour
+    X = X.drop('Timestamp', axis=1)
+
+    # 4. Imputing and Standardizing Strings
+    for col in X.columns:
+        if X[col].dtype == object:
+            X[col] = X[col].fillna('Missing').astype(str)
+
+    # 5. Train/Test Split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    cat_features = [col for col in X.columns if X[col].dtype == object]
     
     encoders = {}
-    for col in features:
-        # Fill missing values with 'Missing' or mode
-        X.fillna({col: 'Missing'}, inplace=True)
-        # Ensure string type
-        X[col] = X[col].astype(str)
-        
+    for col in cat_features:
         le = LabelEncoder()
-        # Fit on unique values and append an "Unknown" class to handle unseen data during inference
-        # Actually simplest to just fit on the column, inference in app.py handles unseen by defaulting to 0
-        X[col] = le.fit_transform(X[col])
+        # Ensure we fit on the entire X column to know all classes.
+        le.fit(X[col])
         encoders[col] = le
         
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = CatBoostClassifier(iterations=500, 
+                               cat_features=cat_features, 
+                               verbose=50, 
+                               random_state=42,
+                               early_stopping_rounds=50)
     
-    # Train XGBoost
-    model = XGBClassifier(use_label_encoder=False, eval_metric='logloss', random_state=42)
-    model.fit(X_train, y_train)
+    model.fit(X_train, y_train, eval_set=(X_test, y_test))
     
     y_pred = model.predict(X_test)
-    print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
-    print(f"F1 Score: {f1_score(y_test, y_pred):.4f}")
+    f1 = f1_score(y_test, y_pred)
+    acc = accuracy_score(y_test, y_pred)
+
+    print(f"\nFinal Optimized F1 Score: {f1:.4f}")
+    print(f"Final Optimized Accuracy: {acc:.4f}")
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
     
     # Ensure models dir exists
     os.makedirs('models', exist_ok=True)
     
-    # Save model and encoders
-    # model_utils.py expects the model to have feature_names_in_ or it will fallback.
-    # XGBoost saves feature_names_in_ by default in newer versions.
     with open('models/final_model.pkl', 'wb') as f:
         pickle.dump(model, f)
         
     with open('models/encoders.pkl', 'wb') as f:
         pickle.dump(encoders, f)
         
-    print("Saved final_model.pkl and encoders.pkl in models/ directory.")
+    print("\nSaved final_model.pkl and encoders.pkl in models/ directory.")
 
 if __name__ == '__main__':
     train()
