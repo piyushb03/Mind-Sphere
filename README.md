@@ -1,14 +1,14 @@
 # 🧠 MindSphere : AI based Mental Health Assessment
 
-A full-stack machine learning application demonstrating XGBoost classification and SHAP-based model explainability for mental health screening.
+A full-stack machine learning application demonstrating an optimized CatBoost classification pipeline with advanced temporal feature engineering and SHAP-based model explainability for assessing mental health treatment-seeking likelihood.
 
 ## 📌 Overview
 
-MindSphere is a web application that assesses mental health risk based on lifestyle, demographic, and psychological factors. It prioritizes explainable AI (XAI), providing users with risk scores and visual explanations of predictions.
+MindSphere is a web application that assesses the likelihood of an individual seeking treatment for a mental health condition based on lifestyle, demographic, and psychological factors. The machine learning pipeline features native handling of high-cardinality categorical features and temporal data extraction, utilizing an optimized CatBoost architecture to prevent overfitting. It prioritizes explainable AI (XAI), providing users with risk scores and visual explanations of predictions.
 
 ## 🌟 Features
 
-- **Advanced AI Engine**: XGBoost classifier 
+- **Advanced AI Engine**: Highly optimized CatBoost Classifier designed for complex categorical datasets
 - **SHAP Explainability**: Shapley Additive Explanations for feature importance visualization
 - **Dynamic Dashboard**: Real-time assessment form mapped to model features
 - **Secure Authentication**: Hashed passwords and Google OAuth 2.0 integration
@@ -21,7 +21,7 @@ MindSphere is a web application that assesses mental health risk based on lifest
 
 **Backend**: Flask, Flask-SQLAlchemy, Flask-Login, Authlib
 
-**Data Science**: XGBoost, SHAP, Pandas, NumPy, Scikit-learn
+**Data Science**: CatBoost, SHAP, Pandas, NumPy, Scikit-learn
 
 ## 🚀 Installation
 
@@ -89,7 +89,7 @@ MindSphere/
 ### Home Page
 
 <img width="1851" height="832" alt="Screenshot 2026-01-13 024613" src="https://github.com/user-attachments/assets/0bab117b-99dc-45fd-9fc8-99bfc656cc96" />
-<img width="1818" height="837" alt="Screenshot 2026-01-13 024628" src="https://github.com/user-attachments/assets/d0b6a1ea-e894-4ade-93a3-967be0334743" />
+
 <img width="1796" height="704" alt="Screenshot 2026-01-13 024640" src="https://github.com/user-attachments/assets/93bf0307-8c80-449f-8022-56124fe7d7a6" />
 <img width="1836" height="590" alt="Screenshot 2026-01-13 024653" src="https://github.com/user-attachments/assets/b95c821d-b752-4413-b87c-e0a3b76b9b67" />
 
