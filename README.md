@@ -81,6 +81,11 @@ MindSphere/
 ├── templates/             # HTML templates
 │   ├── base.html
 │   ├── dashboard.html
+│   ├── history.html
+│   ├── index.html
+│   ├── legal.html
+│   ├── login.html
+│   ├── register.html
 │   └── result.html
 └── instance/site.db       # SQLite database (gitignored)
 ```
