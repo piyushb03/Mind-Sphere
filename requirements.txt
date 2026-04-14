@@ -14,3 +14,7 @@ authlib
 requests
 python-dotenv
 gunicorn
+lightgbm
+catboost
+optuna
+imbalanced-learn
