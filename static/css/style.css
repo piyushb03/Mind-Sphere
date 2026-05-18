@@ -908,3 +908,153 @@ textarea::placeholder {
     align-items: center;
     justify-content: center;
     font-weight: 700;
+    font-size: 0.85rem;
+    margin-top: 0.1rem;
+}
+
+.question-card label {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--dark);
+    line-height: 1.4;
+    flex: 1;
+}
+
+/* Assessment Progress Tracker */
+.assessment-progress-wrapper {
+    position: sticky;
+    top: 72px;
+    z-index: 900;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 0;
+    margin-bottom: 2rem;
+}
+
+.assessment-progress-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.assessment-progress-bar-bg {
+    flex: 1;
+    height: 8px;
+    background: var(--slate-200);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.assessment-progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--primary-gradient);
+    border-radius: var(--radius-full);
+    transition: width 0.3s ease;
+}
+
+.assessment-progress-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   11. Results Page
+   -------------------------------------------------------------------------- */
+.report-card {
+    background: var(--white);
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+    max-width: 860px;
+    margin: 1.5rem auto 3rem;
+}
+
+.result-header {
+    padding-bottom: 1.5rem;
+    border-bottom: 2px dashed var(--slate-200);
+    margin-bottom: 2rem;
+}
+
+.result-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.result-header-left h2 {
+    color: var(--primary);
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.result-header-left p {
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.result-meta-box {
+    text-align: right;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    background: var(--slate-50);
+    padding: 0.6rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.result-meta-box p {
+    margin: 0.15rem 0;
+}
+
+.score-display-card {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.score-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: var(--radius-full);
+    border: 8px solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1.5rem auto;
+    font-weight: 800;
+    font-size: 3rem;
+    line-height: 1;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    background: var(--white);
+    transition: transform 0.3s ease;
+}
+
+.score-circle:hover {
+    transform: scale(1.03);
+}
+
+.score-circle .score-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    letter-spacing: 0.05em;
+}
+
+.advice-box {
+    background: var(--primary-light);
+    padding: clamp(1.25rem, 3vw, 1.75rem);
