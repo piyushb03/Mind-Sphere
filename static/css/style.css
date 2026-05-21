@@ -1058,3 +1058,153 @@ textarea::placeholder {
 .advice-box {
     background: var(--primary-light);
     padding: clamp(1.25rem, 3vw, 1.75rem);
+    border-radius: var(--radius-lg);
+    margin-top: 2rem;
+    border-left: 5px solid var(--primary);
+    box-shadow: var(--shadow-xs);
+}
+
+.advice-box h3 {
+    color: var(--primary-dark);
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.advice-box ul {
+    padding-left: 1.25rem;
+    margin-bottom: 0;
+}
+
+.advice-box li {
+    margin-bottom: 0.6rem;
+    line-height: 1.5;
+    color: var(--text-main);
+}
+
+.advice-box li:last-child {
+    margin-bottom: 0;
+}
+
+/* Results 2-Column Grid */
+.result-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 2rem;
+    align-items: start;
+    margin-top: 2rem;
+}
+
+.shap-container {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+}
+
+.shap-container img {
+    width: 100%;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-xs);
+}
+
+.profile-summary-box {
+    background: var(--slate-50);
+    padding: 1.25rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--slate-200);
+    font-size: 0.925rem;
+}
+
+.summary-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.summary-label {
+    color: var(--text-muted);
+}
+
+.summary-value {
+    font-weight: 600;
+    color: var(--dark);
+    text-align: right;
+}
+
+.result-actions-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem auto 4rem;
+    flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   12. Badges & Indicators
+   -------------------------------------------------------------------------- */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 0.825rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1;
+}
+
+.badge-Minimal, .badge-success {
+    background: var(--success-light);
+    color: var(--success-dark);
+    border: 1px solid #a7f3d0;
+}
+
+.badge-Moderate, .badge-warning {
+    background: var(--warning-light);
+    color: var(--warning-dark);
+    border: 1px solid #fde68a;
+}
+
+.badge-High, .badge-danger {
+    background: var(--danger-light);
+    color: var(--danger-dark);
+    border: 1px solid #fecaca;
+}
+
+/* --------------------------------------------------------------------------
+   13. History Table & Mobile Cards
+   -------------------------------------------------------------------------- */
+.history-table-wrapper {
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-xs);
+    margin-top: 1.5rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    text-align: left;
+}
+
+th, td {
+    padding: 1.1rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
