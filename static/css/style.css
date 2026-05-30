@@ -1478,3 +1478,103 @@ tbody tr:hover {
     margin-bottom: 1rem;
 }
 
+.legal-card p, .legal-card li {
+    color: var(--text-muted);
+    font-size: 0.975rem;
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+}
+
+.legal-card ul, .legal-card ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.legal-warning {
+    border-left: 6px solid var(--danger);
+    background: linear-gradient(to right, #fff5f5, var(--white));
+}
+
+.legal-warning h2 {
+    color: var(--danger-dark);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.legal-nav-pills {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.legal-nav-pill {
+    padding: 0.5rem 1rem;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.legal-nav-pill:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-color: var(--primary-200);
+}
+
+/* --------------------------------------------------------------------------
+   17. Footer
+   -------------------------------------------------------------------------- */
+.site-footer {
+    background: var(--slate-900);
+    color: var(--slate-400);
+    padding: clamp(3rem, 6vw, 4.5rem) 1.5rem max(2rem, calc(1.5rem + env(safe-area-inset-bottom)));
+    margin-top: auto;
+    border-top: 1px solid var(--slate-800);
+}
+
+.footer-grid {
+    max-width: 1140px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    margin-bottom: 3rem;
+}
+
+.footer-col h3 {
+    color: var(--white);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+}
+
+.footer-col p {
+    line-height: 1.6;
+    font-size: 0.925rem;
+    color: var(--slate-400);
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.footer-links a {
+    color: var(--slate-400);
+    font-size: 0.925rem;
+    text-decoration: none;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.footer-links a:hover {
+    color: var(--white);
+    transform: translateX(4px);
+}
