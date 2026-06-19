@@ -53,3 +53,38 @@
                     <a href="{{ url_for('register') }}" class="btn btn-primary btn-sm">Get Started</a>
                 {% endif %}
             </nav>
+
+            <!-- Mobile Hamburger Toggle -->
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Nav Backdrop -->
+    <div class="nav-backdrop" id="navBackdrop"></div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile Navigation">
+        {% if current_user.is_authenticated %}
+            <div class="mobile-user-card">
+                <div class="mobile-user-avatar">
+                    {{ current_user.username[:1].upper() }}
+                </div>
+                <div class="mobile-user-info">
+                    <div class="mobile-user-name">{{ current_user.username }}</div>
+                    <div class="mobile-user-badge"><i class="fas fa-shield-alt"></i> Active Session</div>
+                </div>
+            </div>
+            <a href="/" class="mobile-nav-link">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="{{ url_for('dashboard') }}" class="mobile-nav-link">
+                <i class="fas fa-notes-medical"></i> Assessment
+            </a>
+            <a href="{{ url_for('history') }}" class="mobile-nav-link">
+                <i class="fas fa-clock-rotate-left"></i> My History
+            </a>
+            <a href="{{ url_for('logout') }}" class="mobile-nav-link" style="color: var(--danger);">
