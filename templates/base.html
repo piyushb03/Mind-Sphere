@@ -88,3 +88,43 @@
                 <i class="fas fa-clock-rotate-left"></i> My History
             </a>
             <a href="{{ url_for('logout') }}" class="mobile-nav-link" style="color: var(--danger);">
+                <i class="fas fa-sign-out-alt" style="color: var(--danger);"></i> Logout
+            </a>
+        {% else %}
+            <a href="/" class="mobile-nav-link">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="/#features" class="mobile-nav-link">
+                <i class="fas fa-sparkles"></i> Features
+            </a>
+            <a href="/#about" class="mobile-nav-link">
+                <i class="fas fa-info-circle"></i> About
+            </a>
+            <a href="{{ url_for('login') }}" class="mobile-nav-link">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </a>
+            <a href="{{ url_for('register') }}" class="btn btn-primary btn-full mobile-cta-btn">
+                <i class="fas fa-arrow-right"></i> Get Started
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <!-- Flashed Messages Container -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="container alerts-container">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'success' if category == 'success' else ('danger' if category == 'danger' else 'info') }}" role="alert">
+                            <div class="alert-content">
+                                <i class="fas {{ 'fa-check-circle' if category == 'success' else ('fa-exclamation-circle' if category == 'danger' else 'fa-info-circle') }}"></i>
+                                <span>{{ message }}</span>
+                            </div>
+                            <button type="button" class="alert-close" onclick="this.closest('.alert').remove()" aria-label="Close alert">&times;</button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
