@@ -168,3 +168,43 @@
                     <a href="{{ url_for('legal') }}#privacy"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Privacy Policy</a>
                     <a href="{{ url_for('legal') }}#terms"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Terms of Service</a>
                     <a href="{{ url_for('legal') }}#disclaimer" style="color: #f87171;"><i class="fas fa-exclamation-triangle" style="font-size: 0.75rem;"></i> Medical Disclaimer</a>
+                    <a href="/#feedback"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Send Feedback</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; 2026 MindSphere Project. All Rights Reserved. AI Mental Health Intelligence Platform.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Global Mobile Menu & Interactive Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('navToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const navBackdrop = document.getElementById('navBackdrop');
+
+            function toggleMenu() {
+                const isOpen = mobileMenu.classList.contains('is-open');
+                if (isOpen) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            }
+
+            function openMenu() {
+                navToggle.classList.add('is-active');
+                navToggle.setAttribute('aria-expanded', 'true');
+                mobileMenu.classList.add('is-open');
+                navBackdrop.classList.add('is-open');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            }
+
+            function closeMenu() {
+                navToggle.classList.remove('is-active');
+                navToggle.setAttribute('aria-expanded', 'false');
+                mobileMenu.classList.remove('is-open');
