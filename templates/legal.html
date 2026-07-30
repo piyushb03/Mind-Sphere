@@ -43,3 +43,50 @@
         <div style="background: var(--white); border: 2px solid var(--danger); border-radius: var(--radius-md); padding: 1.25rem; margin-top: 1.25rem;">
             <p style="color: var(--danger-dark); font-weight: 700; margin-bottom: 0.5rem; font-size: 1rem;">
                 <i class="fas fa-phone-volume"></i> In Crisis or Need Immediate Support?
+            </p>
+            <p style="margin-bottom: 0; color: var(--dark); font-size: 0.95rem;">
+                If you or someone you know is in acute distress or experiencing thoughts of self-harm, please contact your local emergency services (e.g. <strong>911</strong> in the US/Canada, <strong>112</strong> in Europe/India, <strong>999</strong> in the UK) or reach out to the <strong>988 Suicide & Crisis Lifeline</strong> immediately.
+            </p>
+        </div>
+    </section>
+
+    <!-- 2. PRIVACY POLICY -->
+    <section class="legal-card" id="privacy">
+        <h2><i class="fas fa-user-shield" style="color: var(--primary);"></i> Privacy Policy</h2>
+        <p>Your trust and data privacy are our highest priorities. This section outlines how we collect, process, and protect your information:</p>
+        <ul>
+            <li>
+                <strong>Data Collection:</strong> We collect discrete self-reported factors (such as age range, occupational sector, indoor duration, and subjective stress levels) solely to feed our ML models and compute your risk score.
+            </li>
+            <li>
+                <strong>Data Storage:</strong> Assessment records are saved securely in our database linked to your user profile so you can inspect historical trends. We never license, sell, or rent your data to data brokers or third-party advertisers.
+            </li>
+            <li>
+                <strong>De-identification & Anonymity:</strong> While user credentials (email/username) are maintained for authentication, the feature vector processed by the predictive algorithms is anonymized during inference.
+            </li>
+            <li>
+                <strong>Account Rights:</strong> You may request full deletion of your assessment history and account at any time by reaching out to our support channel.
+            </li>
+        </ul>
+    </section>
+
+    <!-- 3. TERMS OF SERVICE -->
+    <section class="legal-card" id="terms">
+        <h2><i class="fas fa-file-contract" style="color: var(--accent);"></i> Terms of Service</h2>
+        <p>By creating an account, browsing, or running an assessment on MindSphere, you agree to comply with and be bound by the following terms:</p>
+        <ol>
+            <li><strong>Age Requirement:</strong> You verify that you are at least 18 years of age or the age of majority in your jurisdiction.</li>
+            <li><strong>Informational Use Only:</strong> You acknowledge that risk scores represent probabilistic estimates and may not reflect clinical diagnosis or physical etiology.</li>
+            <li><strong>Prohibition on Third-Party Diagnosis:</strong> You agree to only provide responses reflecting your personal experience and not attempt to diagnose third parties.</li>
+            <li><strong>Limitation of Liability:</strong> MindSphere's creators, maintainers, and host providers accept no legal liability or responsibility for decisions, interventions, or actions taken on the basis of analysis provided by this application.</li>
+        </ol>
+    </section>
+
+    <div class="text-center" style="margin-top: 2rem;">
+        <a href="/" class="btn btn-outline">
+            <i class="fas fa-arrow-left"></i> Return to Homepage
+        </a>
+    </div>
+
+</div>
+{% endblock %}
