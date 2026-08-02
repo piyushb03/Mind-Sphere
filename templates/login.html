@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container container-sm">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="brand-icon" style="margin: 0 auto 1rem; width: 48px; height: 48px; font-size: 1.4rem;">
+                <i class="fas fa-brain"></i>
+            </div>
+            <h2>Welcome Back</h2>
+            <p>Access your assessment history and personalized AI insights.</p>
+        </div>
+
+        <form method="POST" id="loginForm">
+            <div class="form-group">
+                <label for="login-email">Email Address</label>
+                <input type="email" id="login-email" name="email" required placeholder="name@example.com" autocomplete="email">
+            </div>
+
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" name="password" required placeholder="••••••••" autocomplete="current-password">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full btn-lg" id="loginBtn" style="margin-top: 1rem;">
+                <i class="fas fa-sign-in-alt"></i> Login to Account
+            </button>
+        </form>
+
+        <div class="auth-divider">
+            <span>OR</span>
+        </div>
+        
+        <a href="{{ url_for('google_login') }}" class="google-btn">
+            <img src="{{ url_for('static', filename='google.png') }}" width="20" height="20" alt="Google Logo">
+            <span>Sign in with Google</span>
+        </a>
+
+        <p class="text-center" style="margin-top: 2rem; font-size: 0.925rem; color: var(--text-muted);">
+            Don't have an account? 
+            <a href="{{ url_for('register') }}" style="font-weight: 600; color: var(--primary);">Create an account</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('loginForm')?.addEventListener('submit', function() {
+        const btn = document.getElementById('loginBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+    });
+</script>
+{% endblock %}

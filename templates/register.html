@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container container-sm">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="brand-icon" style="margin: 0 auto 1rem; width: 48px; height: 48px; font-size: 1.4rem;">
+                <i class="fas fa-brain"></i>
+            </div>
+            <h2>Create Account</h2>
+            <p>Join MindSphere to track your mental well-being over time.</p>
+        </div>
+        
+        <form method="POST" id="registerForm">
+            <div class="form-group">
+                <label for="reg-username">Full Name or Username</label>
+                <input type="text" id="reg-username" name="username" required placeholder="e.g. John Doe" autocomplete="name">
+            </div>
+
+            <div class="form-group">
+                <label for="reg-email">Email Address</label>
+                <input type="email" id="reg-email" name="email" required placeholder="name@example.com" autocomplete="email">
+            </div>
+
+            <div class="form-group">
+                <label for="reg-password">Password</label>
+                <input type="password" id="reg-password" name="password" required placeholder="Create a secure password" autocomplete="new-password">
+            </div>
+
+            <!-- Terms & Privacy Agreement -->
+            <div class="terms-checkbox-wrapper">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">
+                    I agree to the <a href="{{ url_for('legal') }}#terms" target="_blank" rel="noopener noreferrer">Terms of Service</a> 
+                    and acknowledge the <a href="{{ url_for('legal') }}#privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full btn-lg" id="regBtn">
+                <i class="fas fa-user-plus"></i> Create Account
+            </button>
+        </form>
+
+        <div class="auth-divider">
+            <span>OR</span>
+        </div>
+        
+        <!-- Google OAuth Button -->
+        <a href="{{ url_for('google_login') }}" class="google-btn">
+            <img src="{{ url_for('static', filename='google.png') }}" width="20" height="20" alt="Google Logo">
+            <span>Sign up with Google</span>
+        </a>
+
+        <p class="text-center" style="margin-top: 2rem; font-size: 0.925rem; color: var(--text-muted);">
+            Already have an account? 
+            <a href="{{ url_for('login') }}" style="font-weight: 600; color: var(--primary);">Login here</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('registerForm')?.addEventListener('submit', function() {
+        const btn = document.getElementById('regBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+    });
+</script>
+{% endblock %}
