@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container container-md" style="padding-top: 1.5rem;">
+    
+    <div class="report-card" id="printableArea">
+        
+        <!-- REPORT HEADER (Visible in Print / PDF) -->
+        <div class="result-header">
+            <div class="result-header-flex">
+                <div class="result-header-left">
+                    <h2>
+                        <div class="brand-icon" style="width: 32px; height: 32px; font-size: 0.95rem; display: inline-flex;">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        MindSphere <span style="color: var(--dark); font-weight: 300;">Report</span>
+                    </h2>
+                    <p>AI-Powered Mental Health & Well-being Assessment</p>
+                </div>
+                
+                <div class="result-meta-box">
+                    <p><strong>User:</strong> {{ current_user.username }}</p>
+                    <p><strong>Date:</strong> {{ timestamp }}</p>
+                    <p><strong>Ref ID:</strong> #MS-{{ range(1000, 9999) | random }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN SCORE DISPLAY -->
+        <div class="score-display-card">
+            <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem;">
+                Risk Analysis Result
+            </h3>
+            
+            <div class="score-circle" style="border-color: var(--{{ result.color }}); color: var(--{{ result.color }});">
+                {{ result.score }}
