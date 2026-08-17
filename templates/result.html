@@ -33,3 +33,43 @@
             
             <div class="score-circle" style="border-color: var(--{{ result.color }}); color: var(--{{ result.color }});">
                 {{ result.score }}
+                <span class="score-label">RISK SCORE</span>
+            </div>
+            
+            <div style="margin-bottom: 1.25rem;">
+                <span class="badge badge-{{ result.level }}" style="font-size: 1rem; padding: 0.5rem 1.5rem;">
+                    <i class="fas fa-circle-dot" style="font-size: 0.75rem;"></i>
+                    {{ result.level }} SEVERITY
+                </span>
+            </div>
+            
+            <p style="font-size: 1.1rem; color: var(--text-main); max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                {{ result.message }}
+            </p>
+        </div>
+
+        <!-- DETAILED ADVICE SECTION -->
+        <div class="advice-box">
+            <h3><i class="fas fa-user-doctor"></i> Recommended Action Steps</h3>
+            <ul>
+                {% if result.score < 30 %}
+                    <li><strong>Maintenance & Balance:</strong> Your responses indicate a healthy, balanced state. Continue with your current sleep and physical activity routines.</li>
+                    <li><strong>Proactive Mindfulness:</strong> Engage with mindfulness or breathing exercises periodically to sustain resilience during future periods of high pressure.</li>
+                    <li><strong>Social Connection:</strong> Maintain regular contact with friends, family, and peers to preserve strong emotional support systems.</li>
+                {% elif result.score < 60 %}
+                    <li><strong>Active Stress Management:</strong> You are displaying moderate indicators of emotional strain. Integrate short structured breaks (such as the 25-minute Pomodoro method) into your daily routine.</li>
+                    <li><strong>Monitor Lifestyle Habits:</strong> Pay close attention to subtle changes in your sleep patterns or appetite, which often act as early warning indicators of stress.</li>
+                    <li><strong>Physical Activity:</strong> Commit to at least 20–30 minutes of light outdoor walking or gentle exercise daily to improve mood regulation.</li>
+                {% else %}
+                    <li><strong>Professional Consultation Recommended:</strong> We strongly advise reaching out to a certified counselor, therapist, or mental healthcare professional for comprehensive support.</li>
+                    <li><strong>Immediate De-escalation:</strong> Practice Box Breathing exercises (Inhale for 4s, Hold for 4s, Exhale for 4s, Hold for 4s) when experiencing heightened tension.</li>
+                    <li><strong>Reach Out Today:</strong> Do not isolate yourself. Speak openly with a trusted loved one, colleague, or local helpline specialist about how you feel.</li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <!-- CHARTS & SUMMARY SECTION -->
+        <div class="result-grid">
+            <!-- SHAP Plot Column -->
+            <div class="shap-container">
+                <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--dark); margin-bottom: 0.35rem;">
