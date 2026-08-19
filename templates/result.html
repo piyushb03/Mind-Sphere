@@ -73,3 +73,38 @@
             <!-- SHAP Plot Column -->
             <div class="shap-container">
                 <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--dark); margin-bottom: 0.35rem;">
+                    Contributing Factors (SHAP)
+                </h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                    Red bars pushed your risk score <strong style="color: var(--danger);">HIGHER</strong>. Blue bars pulled it <strong style="color: var(--primary);">LOWER</strong>.
+                </p>
+                
+                {% if plot_url %}
+                    <img src="data:image/png;base64,{{ plot_url }}" alt="SHAP Feature Importance Plot" style="width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                {% else %}
+                    <div style="padding: 2.5rem 1rem; background: var(--slate-100); text-align: center; border-radius: var(--radius-md); color: var(--text-muted);">
+                        <i class="fas fa-chart-bar" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.5;"></i>
+                        <p style="margin: 0;">Feature plot is being generated or was not available for this session.</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Profile Summary Column -->
+            <div>
+                <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--dark); margin-bottom: 0.35rem;">
+                    Profile Summary
+                </h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                    Key data points captured during this evaluation:
+                </p>
+                
+                <div class="profile-summary-box">
+                    <div class="summary-row">
+                        <span class="summary-label">Age / Gender</span>
+                        <span class="summary-value">{{ input.Age }} / {{ input.Gender }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Occupation</span>
+                        <span class="summary-value">{{ input.Occupation }}</span>
+                    </div>
+                    <div class="summary-row">
