@@ -108,3 +108,33 @@
                         <span class="summary-value">{{ input.Occupation }}</span>
                     </div>
                     <div class="summary-row">
+                        <span class="summary-label">Days Indoors</span>
+                        <span class="summary-value">{{ input.Days_Indoors }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Growing Stress</span>
+                        <span class="summary-value">
+                            <span class="badge {{ 'badge-danger' if input.Growing_Stress == 'Yes' else 'badge-Minimal' }}">
+                                {{ input.Growing_Stress }}
+                            </span>
+                        </span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Mood Swings</span>
+                        <span class="summary-value">{{ input.Mood_Swings }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Family History</span>
+                        <span class="summary-value">
+                            <span class="badge {{ 'badge-warning' if input.family_history == 'Yes' else 'badge-Minimal' }}">
+                                {{ input.family_history }}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Medical Disclaimer -->
+        <div style="background: var(--slate-100); padding: 1rem 1.25rem; border-radius: var(--radius-md); margin-top: 2rem; font-size: 0.825rem; text-align: center; color: var(--text-muted); line-height: 1.5; border: 1px solid var(--border-color);">
+            <strong style="color: var(--dark);"><i class="fas fa-triangle-exclamation"></i> Medical Disclaimer:</strong> 
