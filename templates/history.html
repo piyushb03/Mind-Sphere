@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container container-md" style="padding-top: 1.5rem; padding-bottom: 3rem;">
+    <div class="card" style="max-width: 900px; margin-top: 1rem;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 1.25rem; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h2 style="font-size: 1.75rem; font-weight: 800; color: var(--dark); margin: 0;">
+                    My Assessment History
+                </h2>
+                <p style="margin: 0.25rem 0 0; color: var(--text-muted); font-size: 0.95rem;">
+                    Review your past evaluations, track trends, and revisit detailed AI explanations.
+                </p>
+            </div>
+            {% if assessments %}
+                <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus"></i> New Check-up
+                </a>
+            {% endif %}
+        </div>
+        
+        {% if assessments %}
+            <!-- 1. DESKTOP / TABLET DATA TABLE (Shown on screens >= 768px) -->
+            <div class="history-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date Taken</th>
+                            <th>Risk Score</th>
+                            <th>Severity Level</th>
+                            <th>Key Metrics</th>
+                            <th style="text-align: right;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
