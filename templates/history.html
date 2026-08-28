@@ -68,3 +68,38 @@
                                     <span>{{ item.days_indoors }}</span>
                                 </div>
                             </td>
+                            
+                            <td style="text-align: right;">
+                                <a href="{{ url_for('view_previous_result', assessment_id=item.id) }}" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-file-lines"></i> View Report
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 2. MOBILE ASSESSMENT CARDS (Shown on screens < 768px, zero horizontal scrolling) -->
+            <div class="history-cards-mobile">
+                {% for item in assessments %}
+                <div class="history-card-item">
+                    <div class="history-card-top">
+                        <div class="history-card-date">
+                            <span>{{ item.date_posted.strftime('%b %d, %Y') }}</span>
+                            <small><i class="far fa-clock"></i> {{ item.date_posted.strftime('%H:%M') }}</small>
+                        </div>
+                        <span class="badge badge-{{ item.risk_level }}">
+                            {{ item.risk_level }}
+                        </span>
+                    </div>
+
+                    <div class="history-card-metrics">
+                        <div class="history-card-metric-item">
+                            <span class="history-card-metric-label">Risk Probability</span>
+                            <div class="history-card-metric-val">
+                                <span style="font-size: 1.35rem; color: var(--primary-dark);">{{ "%.1f"|format(item.risk_score) }}</span>
+                                <span style="font-size: 0.8rem; color: var(--text-muted);">/ 100</span>
+                            </div>
+                        </div>
+
