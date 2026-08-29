@@ -103,3 +103,33 @@
                             </div>
                         </div>
 
+                        <div class="history-card-metric-item">
+                            <span class="history-card-metric-label">Occupation</span>
+                            <div class="history-card-metric-val" style="font-size: 0.95rem;">
+                                <i class="fas fa-briefcase" style="color: var(--primary); font-size: 0.85rem;"></i>
+                                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ item.occupation }}</span>
+                            </div>
+                        </div>
+
+                        <div class="history-card-metric-item" style="grid-column: 1 / -1;">
+                            <span class="history-card-metric-label">Activity Indoors</span>
+                            <div class="history-card-metric-val" style="font-size: 0.95rem;">
+                                <i class="fas fa-house-chimney" style="color: var(--slate-400); font-size: 0.85rem;"></i>
+                                <span>{{ item.days_indoors }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="{{ url_for('view_previous_result', assessment_id=item.id) }}" class="btn btn-outline btn-full">
+                        <i class="fas fa-file-lines"></i> View Detailed Report
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+
+        {% else %}
+            <!-- Empty State -->
+            <div style="text-align: center; padding: clamp(2rem, 6vw, 4rem) 1rem;">
+                <div style="width: 70px; height: 70px; background: var(--primary-light); color: var(--primary); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.5rem;">
+                    <i class="fas fa-notes-medical"></i>
+                </div>
