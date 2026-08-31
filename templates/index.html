@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-badge">
+            <i class="fas fa-sparkles"></i>
+            <span>AI-Driven Wellness Intelligence</span>
+        </div>
+        
+        <h1>
+            Mental Health Prediction <br>
+            <span class="highlight">Powered by AI</span>
+        </h1>
+        
+        <p>
+            Detect early signs of stress, fatigue, and emotional burnout using our advanced Machine Learning engine. 
+            Get instant, confidential, and explainable results with actionable guidance.
+        </p>
+        
+        <div class="hero-actions">
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-notes-medical"></i> Go to Dashboard
+                </a>
+            {% else %}
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-play"></i> Start Assessment
+                </a>
+            {% endif %}
+            <a href="#features" class="btn btn-outline btn-lg">
+                <i class="fas fa-arrow-down"></i> Learn More
+            </a>
+        </div>
+
+        <div class="hero-highlights">
+            <div class="hero-highlight-item">
+                <i class="fas fa-microchip"></i>
+                <span>CatBoost & XGBoost Engine</span>
+            </div>
+            <div class="hero-highlight-item">
+                <i class="fas fa-chart-pie"></i>
+                <span>SHAP Value Explainability</span>
+            </div>
+            <div class="hero-highlight-item">
+                <i class="fas fa-user-shield"></i>
+                <span>100% Confidential & Secure</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section id="features" class="section bg-white">
+    <div class="container">
+        <div class="section-header">
+            <h2>Why Choose MindSphere?</h2>
+            <p>We combine validated psychological parameters with cutting-edge data science to bring clarity to mental health.</p>
+        </div>
+        
+        <div class="grid-3">
+            <div class="feature-card">
+                <div class="icon-box">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>CatBoost Engine</h3>
+                <p>Categorical Boosting technology ensures high-accuracy predictions with robust handling of categorical lifestyle, work, and behavioral factors.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon-box">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <h3>SHAP Explainability</h3>
+                <p>We don't just calculate a score. We show you exactly <em>why</em> your risk level was determined using Game-Theoretic Shapley values for total transparency.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon-box">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <h3>Instant Reports</h3>
+                <p>Generate clean, professional PDF assessment reports with a single click to share with your counselor, therapist, or for personal progress tracking.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT & FEEDBACK SECTION -->
+<section id="about" class="section bg-light">
+    <div class="container">
+        <div class="about-grid">
+            <!-- Left: About Information -->
+            <div class="about-content">
+                <h2>Bridging Technology & Wellness</h2>
+                <p>
+                    Mental health is just as essential as physical health. MindSphere bridges the gap between machine learning and daily wellness. 
+                    By assessing key factors like work environment, daily habits, coping mechanisms, and social support, we deliver preliminary risk evaluations that empower proactive care.
+                </p>
+                <ul class="about-checklist">
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Strict Data Privacy — No personal assessment data is shared or sold</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>24/7 Accessible — Check in on your mental state whenever needed</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Research-Formulated — Built on standard health metrics and ML benchmarks</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Tailored Recommendations — Actionable steps based on your severity score</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Right: Feedback Form Card -->
+            <div class="feedback-card" id="feedback">
+                <h3><i class="fas fa-comment-dots"></i> Send Feedback</h3>
+                <p class="subtitle">Have suggestions or thoughts? Help us refine our model and platform.</p>
+                
+                <form id="my-form" action="{{ formspree_endpoint }}" method="POST">
+                    <div class="form-group">
+                        <label for="feedback-email">Your Email</label>
+                        <input type="email" id="feedback-email" name="email" placeholder="name@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="feedback-message">Your Feedback or Suggestion</label>
+                        <textarea id="feedback-message" name="message" rows="3" placeholder="Tell us how we can improve..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" id="my-form-button" class="btn btn-primary btn-full">
+                        <i class="fas fa-paper-plane"></i> Send Feedback
+                    </button>
+                    
+                    <p id="my-form-status" style="margin-top: 1rem; text-align: center; font-size: 0.9rem; font-weight: 600; min-height: 1.2rem;"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Feedback Form Submission Handler -->
+<script>
+    const form = document.getElementById("my-form");
+    
+    async function handleSubmit(event) {
+      event.preventDefault();
+      const status = document.getElementById("my-form-status");
+      const button = document.getElementById("my-form-button");

@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container container-md" style="padding-top: 1.5rem;">
+    
+    <div class="report-card" id="printableArea">
+        
+        <!-- REPORT HEADER (Visible in Print / PDF) -->
+        <div class="result-header">
+            <div class="result-header-flex">
+                <div class="result-header-left">
+                    <h2>
+                        <div class="brand-icon" style="width: 32px; height: 32px; font-size: 0.95rem; display: inline-flex;">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        MindSphere <span style="color: var(--dark); font-weight: 300;">Report</span>
+                    </h2>
+                    <p>AI-Powered Mental Health & Well-being Assessment</p>
+                </div>
+                
+                <div class="result-meta-box">
+                    <p><strong>User:</strong> {{ current_user.username }}</p>
+                    <p><strong>Date:</strong> {{ timestamp }}</p>
+                    <p><strong>Ref ID:</strong> #MS-{{ range(1000, 9999) | random }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN SCORE DISPLAY -->
+        <div class="score-display-card">
+            <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem;">
+                Risk Analysis Result
+            </h3>
+            
+            <div class="score-circle" style="border-color: var(--{{ result.color }}); color: var(--{{ result.color }});">
+                {{ result.score }}
+                <span class="score-label">RISK SCORE</span>
+            </div>
+            
+            <div style="margin-bottom: 1.25rem;">
+                <span class="badge badge-{{ result.level }}" style="font-size: 1rem; padding: 0.5rem 1.5rem;">
+                    <i class="fas fa-circle-dot" style="font-size: 0.75rem;"></i>
+                    {{ result.level }} SEVERITY
+                </span>
+            </div>
+            
+            <p style="font-size: 1.1rem; color: var(--text-main); max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                {{ result.message }}
+            </p>
+        </div>
+
+        <!-- DETAILED ADVICE SECTION -->
+        <div class="advice-box">
+            <h3><i class="fas fa-user-doctor"></i> Recommended Action Steps</h3>
+            <ul>
+                {% if result.score < 30 %}
+                    <li><strong>Maintenance & Balance:</strong> Your responses indicate a healthy, balanced state. Continue with your current sleep and physical activity routines.</li>
+                    <li><strong>Proactive Mindfulness:</strong> Engage with mindfulness or breathing exercises periodically to sustain resilience during future periods of high pressure.</li>
+                    <li><strong>Social Connection:</strong> Maintain regular contact with friends, family, and peers to preserve strong emotional support systems.</li>
+                {% elif result.score < 60 %}
+                    <li><strong>Active Stress Management:</strong> You are displaying moderate indicators of emotional strain. Integrate short structured breaks (such as the 25-minute Pomodoro method) into your daily routine.</li>
+                    <li><strong>Monitor Lifestyle Habits:</strong> Pay close attention to subtle changes in your sleep patterns or appetite, which often act as early warning indicators of stress.</li>
+                    <li><strong>Physical Activity:</strong> Commit to at least 20–30 minutes of light outdoor walking or gentle exercise daily to improve mood regulation.</li>
+                {% else %}
+                    <li><strong>Professional Consultation Recommended:</strong> We strongly advise reaching out to a certified counselor, therapist, or mental healthcare professional for comprehensive support.</li>
+                    <li><strong>Immediate De-escalation:</strong> Practice Box Breathing exercises (Inhale for 4s, Hold for 4s, Exhale for 4s, Hold for 4s) when experiencing heightened tension.</li>
+                    <li><strong>Reach Out Today:</strong> Do not isolate yourself. Speak openly with a trusted loved one, colleague, or local helpline specialist about how you feel.</li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <!-- CHARTS & SUMMARY SECTION -->
+        <div class="result-grid">
+            <!-- SHAP Plot Column -->
+            <div class="shap-container">
+                <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--dark); margin-bottom: 0.35rem;">
+                    Contributing Factors (SHAP)
+                </h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                    Red bars pushed your risk score <strong style="color: var(--danger);">HIGHER</strong>. Blue bars pulled it <strong style="color: var(--primary);">LOWER</strong>.
+                </p>
+                
+                {% if plot_url %}
+                    <img src="data:image/png;base64,{{ plot_url }}" alt="SHAP Feature Importance Plot" style="width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                {% else %}
+                    <div style="padding: 2.5rem 1rem; background: var(--slate-100); text-align: center; border-radius: var(--radius-md); color: var(--text-muted);">
+                        <i class="fas fa-chart-bar" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.5;"></i>
+                        <p style="margin: 0;">Feature plot is being generated or was not available for this session.</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Profile Summary Column -->
+            <div>
+                <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--dark); margin-bottom: 0.35rem;">
+                    Profile Summary
+                </h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                    Key data points captured during this evaluation:
+                </p>
+                
+                <div class="profile-summary-box">
+                    <div class="summary-row">
+                        <span class="summary-label">Age / Gender</span>
+                        <span class="summary-value">{{ input.Age }} / {{ input.Gender }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Occupation</span>
+                        <span class="summary-value">{{ input.Occupation }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Days Indoors</span>
+                        <span class="summary-value">{{ input.Days_Indoors }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Growing Stress</span>
+                        <span class="summary-value">
+                            <span class="badge {{ 'badge-danger' if input.Growing_Stress == 'Yes' else 'badge-Minimal' }}">
+                                {{ input.Growing_Stress }}
+                            </span>
+                        </span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Mood Swings</span>
+                        <span class="summary-value">{{ input.Mood_Swings }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Family History</span>
+                        <span class="summary-value">
+                            <span class="badge {{ 'badge-warning' if input.family_history == 'Yes' else 'badge-Minimal' }}">
+                                {{ input.family_history }}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Medical Disclaimer -->
+        <div style="background: var(--slate-100); padding: 1rem 1.25rem; border-radius: var(--radius-md); margin-top: 2rem; font-size: 0.825rem; text-align: center; color: var(--text-muted); line-height: 1.5; border: 1px solid var(--border-color);">
+            <strong style="color: var(--dark);"><i class="fas fa-triangle-exclamation"></i> Medical Disclaimer:</strong> 
