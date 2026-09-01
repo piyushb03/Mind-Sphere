@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container container-md" style="padding-top: 1.5rem;">
+    
+    <!-- Assessment Header -->
+    <div class="text-center" style="margin-bottom: 2rem;">
+        <span class="badge badge-success" style="margin-bottom: 0.75rem;">
+            <i class="fas fa-shield-alt"></i> Confidential & Secure
+        </span>
+        <h1 style="font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; color: var(--dark); margin-bottom: 0.5rem;">
+            Mental Wellness Assessment
+        </h1>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1rem;">
+            Please answer each question honestly. Your inputs are evaluated by our CatBoost machine learning model to estimate stress and wellness indicators.
+        </p>
+    </div>
+
+    <!-- Live Progress Bar -->
+    <div class="assessment-progress-wrapper">
+        <div class="assessment-progress-inner">
+            <div class="assessment-progress-bar-bg">
+                <div class="assessment-progress-bar-fill" id="progressBar"></div>
+            </div>
+            <span class="assessment-progress-text" id="progressText">0 of 16 Answered</span>
+        </div>
+    </div>
+
+    <form method="POST" id="assessmentForm">
+        
+        <!-- SECTION 1: DEMOGRAPHICS -->
+        <div class="assessment-section-title">
+            <i class="fas fa-user-circle"></i>
+            <span>1. Personal & Professional Details</span>
+        </div>
+        
+        <!-- Question 1: Age -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-number">1</span>
+                <label for="input-age">What is your Age?</label>
