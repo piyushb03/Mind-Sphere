@@ -38,3 +38,33 @@
             <div class="question-header">
                 <span class="q-number">1</span>
                 <label for="input-age">What is your Age?</label>
+            </div>
+            <input type="number" id="input-age" name="age" required min="10" max="100" placeholder="Enter age (e.g. 25)" class="form-input">
+        </div>
+
+        <!-- Question 2: Gender -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-number">2</span>
+                <label for="input-gender">Gender</label>
+            </div>
+            <select id="input-gender" name="gender" required class="form-input">
+                <option value="" disabled selected>Select your gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <!-- Question 3: Country -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-number">3</span>
+                <label for="input-country">Country of Residence</label>
+            </div>
+            <select id="input-country" name="country" required class="form-input">
+                <option value="" disabled selected>Select your country</option>
+                <option value="United States">United States</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="Canada">Canada</option>
+                <option value="India">India</option>
