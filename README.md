@@ -73,3 +73,38 @@ MindSphere/
 ├── requirements.txt       # Dependencies
 ├── .env                   # Environment variables (gitignored)
 ├── models/                # Serialized models
+│   ├── final_model.pkl
+│   └── encoders.pkl
+├── static/                # Assets
+│   ├── css/style.css
+│   └── brain.png
+├── templates/             # HTML templates
+│   ├── base.html
+│   ├── dashboard.html
+│   ├── history.html
+│   ├── index.html
+│   ├── legal.html
+│   ├── login.html
+│   ├── register.html
+│   └── result.html
+└── instance/site.db       # SQLite database (gitignored)
+```
+
+## Screenshots 
+### Home Page
+
+<img width="1851" height="832" alt="Screenshot 2026-01-13 024613" src="https://github.com/user-attachments/assets/0bab117b-99dc-45fd-9fc8-99bfc656cc96" />
+
+<img width="1796" height="704" alt="Screenshot 2026-01-13 024640" src="https://github.com/user-attachments/assets/93bf0307-8c80-449f-8022-56124fe7d7a6" />
+<img width="1836" height="590" alt="Screenshot 2026-01-13 024653" src="https://github.com/user-attachments/assets/b95c821d-b752-4413-b87c-e0a3b76b9b67" />
+
+
+### Dashboard
+The main assessment interface where users input their mental health metrics and receive risk evaluations with visual feedback.
+
+<img width="1871" height="847" alt="image" src="https://github.com/user-attachments/assets/18ff6ee9-66c0-48fd-8b06-40782c8bd66e" />
+<img width="1847" height="853" alt="image" src="https://github.com/user-attachments/assets/68be8fae-acfc-4427-873b-250929f593f9" />
+
+
+### Results Page
+Displays personalized risk scores, SHAP force plots explaining individual predictions, and actionable insights based on feature contributions.
