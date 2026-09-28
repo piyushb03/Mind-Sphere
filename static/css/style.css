@@ -1678,3 +1678,73 @@ tbody tr:hover {
         gap: 1rem;
     }
 
+    .result-meta-box {
+        text-align: left;
+        width: 100%;
+    }
+
+    /* Switch desktop table to card list */
+    .history-table-wrapper {
+        display: none;
+    }
+
+    .history-cards-mobile {
+        display: flex;
+    }
+
+    /* Result Actions Bar */
+    .result-actions-bar {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.75rem;
+    }
+
+    .result-actions-bar .btn {
+        width: 100%;
+    }
+
+    /* Footer single column */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+/* Small Phones Breakpoint (<= 480px) */
+@media (max-width: 480px) {
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+    }
+
+    .hero-highlights {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .score-circle {
+        width: 130px;
+        height: 130px;
+        font-size: 2.5rem;
+    }
+
+    .history-card-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .navbar {
+        padding: 0 0.5rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   20. Print Stylesheet
+   -------------------------------------------------------------------------- */
+@media print {
+    body {
+        background: #ffffff !important;
