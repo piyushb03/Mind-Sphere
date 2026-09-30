@@ -1748,3 +1748,40 @@ tbody tr:hover {
 @media print {
     body {
         background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 12pt;
+    }
+
+    .site-header,
+    .site-footer,
+    .no-print,
+    .nav-toggle,
+    .mobile-menu,
+    .nav-backdrop,
+    .alerts-container {
+        display: none !important;
+    }
+
+    .report-card, .card {
+        box-shadow: none !important;
+        border: 1px solid #cccccc !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .score-circle {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .badge {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        border: 1px solid #999999 !important;
+    }
+
+    .result-grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
