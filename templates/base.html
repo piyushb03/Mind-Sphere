@@ -208,3 +208,42 @@
                 navToggle.classList.remove('is-active');
                 navToggle.setAttribute('aria-expanded', 'false');
                 mobileMenu.classList.remove('is-open');
+                navBackdrop.classList.remove('is-open');
+                document.body.style.overflow = '';
+            }
+
+            if (navToggle) {
+                navToggle.addEventListener('click', toggleMenu);
+            }
+
+            if (navBackdrop) {
+                navBackdrop.addEventListener('click', closeMenu);
+            }
+
+            // Close on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('is-open')) {
+                    closeMenu();
+                }
+            });
+
+            // Close menu when a link inside is clicked
+            const mobileLinks = document.querySelectorAll('.mobile-nav-link, .mobile-cta-btn');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+
+            // Auto-dismiss alerts after 6 seconds
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    alert.style.transform = 'translateY(-8px)';
+                    alert.style.transition = 'all 0.4s ease';
+                    setTimeout(() => alert.remove(), 400);
+                }, 6000);
+            });
+        });
+    </script>
+</body>
+</html>
