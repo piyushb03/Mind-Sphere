@@ -153,3 +153,46 @@
       event.preventDefault();
       const status = document.getElementById("my-form-status");
       const button = document.getElementById("my-form-button");
+      const data = new FormData(event.target);
+      
+      button.disabled = true;
+      button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+      status.innerHTML = "Processing...";
+      status.style.color = "var(--text-muted)";
+
+      fetch(event.target.action, {
+        method: form.method,
+        body: data,
+        headers: {
+            'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          status.innerHTML = "Thanks for your feedback! <i class='fas fa-check-circle'></i>";
+          status.style.color = "var(--success)";
+          form.reset();
+        } else {
+          response.json().then(data => {
+            if (Object.hasOwn(data, 'errors')) {
+              status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+            } else {
+              status.innerHTML = "Oops! There was a problem submitting your form.";
+            }
+            status.style.color = "var(--danger)";
+          })
+        }
+      }).catch(error => {
+        status.innerHTML = "Network error. Please check your connection.";
+        status.style.color = "var(--danger)";
+      }).finally(() => {
+        button.disabled = false;
+        button.innerHTML = '<i class="fas fa-paper-plane"></i> Send Feedback';
+      });
+    }
+    
+    if (form) {
+        form.addEventListener("submit", handleSubmit);
+    }
+</script>
+
+{% endblock %}
