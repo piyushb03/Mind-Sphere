@@ -268,3 +268,52 @@
                 <option value="Not sure">Not sure</option>
                 <option value="Yes">Yes</option>
             </select>
+        </div>
+
+        <!-- Submit Button -->
+        <div style="margin-top: 2.5rem; margin-bottom: 4rem;">
+            <button type="submit" class="btn btn-primary btn-lg btn-full" id="submitBtn">
+                <i class="fas fa-chart-line"></i> Generate AI Analysis Report
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Assessment Progress Tracking Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('assessmentForm');
+        const inputs = form.querySelectorAll('.form-input');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const total = inputs.length;
+
+        function updateProgress() {
+            let filled = 0;
+            inputs.forEach(input => {
+                if (input.value && input.value.trim() !== '') {
+                    filled++;
+                }
+            });
+            const percent = Math.round((filled / total) * 100);
+            progressBar.style.width = percent + '%';
+            progressText.textContent = `${filled} of ${total} Answered (${percent}%)`;
+        }
+
+        inputs.forEach(input => {
+            input.addEventListener('change', updateProgress);
+            input.addEventListener('input', updateProgress);
+        });
+
+        // Initialize on load
+        updateProgress();
+
+        // Loading state on submit
+        form.addEventListener('submit', function() {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running Machine Learning Model...';
+        });
+    });
+</script>
+{% endblock %}
