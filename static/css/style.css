@@ -324,27 +324,28 @@ a:hover {
 
 /* Mobile Drawer & Backdrop */
 .nav-backdrop {
-    display: none;
     position: fixed;
     top: 72px;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(15, 23, 42, 0.4);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     z-index: 998;
     opacity: 0;
-    transition: opacity 0.25s ease;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
 .nav-backdrop.is-open {
-    display: block;
     opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .mobile-menu {
-    display: none;
     position: fixed;
     top: 72px;
     left: 0;
@@ -352,21 +353,25 @@ a:hover {
     background: var(--white);
     border-bottom: 1px solid var(--border-color);
     box-shadow: var(--shadow-xl);
-    padding: 1.25rem 1.5rem 2rem;
+    padding: 1.25rem 1.5rem max(2rem, env(safe-area-inset-bottom));
     z-index: 999;
     max-height: calc(100vh - 72px);
     overflow-y: auto;
+    display: flex;
     flex-direction: column;
     gap: 0.5rem;
     transform: translateY(-10px);
     opacity: 0;
-    transition: transform 0.25s ease, opacity 0.25s ease;
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, visibility 0.25s ease;
 }
 
 .mobile-menu.is-open {
-    display: flex;
     transform: translateY(0);
     opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .mobile-user-card {
@@ -1526,7 +1531,7 @@ tbody tr:hover {
 .site-footer {
     background: var(--slate-900);
     color: var(--slate-400);
-    padding: clamp(3rem, 6vw, 4.5rem) 1.5rem 2rem;
+    padding: clamp(3rem, 6vw, 4.5rem) 1.5rem max(2rem, calc(1.5rem + env(safe-area-inset-bottom)));
     margin-top: auto;
     border-top: 1px solid var(--slate-800);
 }
