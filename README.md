@@ -108,3 +108,35 @@ The main assessment interface where users input their mental health metrics and 
 
 ### Results Page
 Displays personalized risk scores, SHAP force plots explaining individual predictions, and actionable insights based on feature contributions.
+
+<img width="1843" height="856" alt="Screenshot 2026-01-13 024923" src="https://github.com/user-attachments/assets/337e0c5a-3115-48e7-9365-1a2107778acd" />
+<img width="1002" height="825" alt="Screenshot 2026-01-13 024952" src="https://github.com/user-attachments/assets/630fb98f-4d55-4197-af7b-b8614e59f343" />
+
+
+### History Page
+Provides a chronological record of past assessments, allowing users to revisit previous risk scores, explanations, and generated reports. 
+
+<img width="1862" height="869" alt="Screenshot 2026-01-13 024853" src="https://github.com/user-attachments/assets/e1f072ea-f08e-492e-83fc-5eb3dcdd05f9" />
+
+### Report Generation
+PDF export functionality showcasing professional assessment summaries with graphs and detailed explanations.
+
+<img width="1862" height="731" alt="image" src="https://github.com/user-attachments/assets/2e954ca8-321c-4946-acb2-996d40951430" />
+<img width="1866" height="862" alt="image" src="https://github.com/user-attachments/assets/816ae81c-868a-4c02-ae44-cedb2af340a9" />
+
+
+
+## ⚖️ Legal Disclaimer
+
+**MindSphere is not a diagnostic tool.** Results are statistical estimations, not medical advice. Consult qualified mental health professionals for clinical concerns.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/YourFeature`
+3. Commit: `git commit -m 'Add feature'`
+4. Push: `git push origin feature/YourFeature`
+5. Open a pull request
+
+
+
