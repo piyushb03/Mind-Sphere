@@ -2,48 +2,126 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="MindSphere - AI-Powered Mental Health Prediction, Early Risk Detection and Explainable Insights.">
+    <meta name="theme-color" content="#0d9488">
     <title>MindSphere - Mental Health AI</title>
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='brain.png') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Design System -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <a href="/" class="brand">
-            <i class="fas fa-brain fa-lg"></i> MindSphere
-        </a>
-        <div class="nav-links">
-            {% if current_user.is_authenticated %}
-                <a href="/">Home</a>
-                <a href="{{ url_for('dashboard') }}">Assessment</a>
-                <a href="{{ url_for('history') }}">My History</a>
-                <span style="color: #cbd5e1;">|</span>
-                <span style="font-weight: 600; color: var(--primary);">{{ current_user.username }}</span>
-                <a href="{{ url_for('logout') }}" style="color: var(--danger);">Logout</a>
-            {% else %}
-                <a href="/">Home</a>
-                <a href="/#features">Features</a>
-                <a href="/#about">About</a>
-                <a href="{{ url_for('login') }}">Login</a>
-                <a href="{{ url_for('register') }}" class="nav-btn">Get Started</a>
-            {% endif %}
+    <!-- SITE HEADER / NAVBAR -->
+    <header class="site-header">
+        <div class="container navbar">
+            <a href="/" class="brand" aria-label="MindSphere Home">
+                <div class="brand-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <span class="brand-name">Mind<span>Sphere</span></span>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="nav-links" aria-label="Desktop Navigation">
+                {% if current_user.is_authenticated %}
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="{{ url_for('dashboard') }}" class="nav-link">Assessment</a>
+                    <a href="{{ url_for('history') }}" class="nav-link">My History</a>
+                    <span class="nav-divider">|</span>
+                    <span class="user-chip">
+                        <i class="fas fa-user-circle"></i>
+                        {{ current_user.username }}
+                    </span>
+                    <a href="{{ url_for('logout') }}" class="nav-link logout-link">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                {% else %}
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/#features" class="nav-link">Features</a>
+                    <a href="/#about" class="nav-link">About</a>
+                    <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-sm">Get Started</a>
+                {% endif %}
+            </nav>
+
+            <!-- Mobile Hamburger Toggle -->
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-    </nav>
+    </header>
+
+    <!-- Mobile Nav Backdrop -->
+    <div class="nav-backdrop" id="navBackdrop"></div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile Navigation">
+        {% if current_user.is_authenticated %}
+            <div class="mobile-user-card">
+                <div class="mobile-user-avatar">
+                    {{ current_user.username[:1].upper() }}
+                </div>
+                <div class="mobile-user-info">
+                    <div class="mobile-user-name">{{ current_user.username }}</div>
+                    <div class="mobile-user-badge"><i class="fas fa-shield-alt"></i> Active Session</div>
+                </div>
+            </div>
+            <a href="/" class="mobile-nav-link">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="{{ url_for('dashboard') }}" class="mobile-nav-link">
+                <i class="fas fa-notes-medical"></i> Assessment
+            </a>
+            <a href="{{ url_for('history') }}" class="mobile-nav-link">
+                <i class="fas fa-clock-rotate-left"></i> My History
+            </a>
+            <a href="{{ url_for('logout') }}" class="mobile-nav-link" style="color: var(--danger);">
+                <i class="fas fa-sign-out-alt" style="color: var(--danger);"></i> Logout
+            </a>
+        {% else %}
+            <a href="/" class="mobile-nav-link">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="/#features" class="mobile-nav-link">
+                <i class="fas fa-sparkles"></i> Features
+            </a>
+            <a href="/#about" class="mobile-nav-link">
+                <i class="fas fa-info-circle"></i> About
+            </a>
+            <a href="{{ url_for('login') }}" class="mobile-nav-link">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </a>
+            <a href="{{ url_for('register') }}" class="btn btn-primary btn-full mobile-cta-btn">
+                <i class="fas fa-arrow-right"></i> Get Started
+            </a>
+        {% endif %}
+    </div>
 
     <!-- MAIN CONTENT -->
-    <div class="main-content">
+    <main class="main-content">
+        <!-- Flashed Messages Container -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                <div class="container" style="padding-bottom: 0;">
+                <div class="container alerts-container">
                     {% for category, message in messages %}
-                        <div style="padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; 
-                                    background: {{ '#dcfce7' if category == 'success' else '#fee2e2' }}; 
-                                    color: {{ '#166534' if category == 'success' else '#991b1b' }};">
-                            {{ message }}
+                        <div class="alert alert-{{ 'success' if category == 'success' else ('danger' if category == 'danger' else 'info') }}" role="alert">
+                            <div class="alert-content">
+                                <i class="fas {{ 'fa-check-circle' if category == 'success' else ('fa-exclamation-circle' if category == 'danger' else 'fa-info-circle') }}"></i>
+                                <span>{{ message }}</span>
+                            </div>
+                            <button type="button" class="alert-close" onclick="this.closest('.alert').remove()" aria-label="Close alert">&times;</button>
                         </div>
                     {% endfor %}
                 </div>
@@ -51,40 +129,121 @@
         {% endwith %}
         
         {% block content %}{% endblock %}
-    </div>
+    </main>
 
     <!-- FOOTER -->
     <footer class="site-footer">
         <div class="footer-grid">
             <div class="footer-col">
-                <div class="brand" style="margin-bottom: 1rem; color: white;">
-                    <i class="fas fa-brain"></i> MindSphere
+                <div class="brand" style="color: white; margin-bottom: 1.25rem;">
+                    <div class="brand-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <span style="color: white;">Mind<span style="color: var(--primary-200);">Sphere</span></span>
                 </div>
-                <p>Empowering you with AI-driven insights for better mental wellness. Your journey to balance starts here.</p>
-                <div class="social-links" style="margin-top: 1.5rem;">
-                    <a href="https://www.instagram.com/mindsphere_org/"><i class="fab fa-instagram"></i></a>
-                    <a href="mailto:mindsphere.work@gmail.com"><i class="fas fa-envelope"></i></a>
+                <p>Empowering individuals with AI-driven insights for mental wellness and proactive self-care. Your journey to balance and clarity starts here.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/mindsphere_org/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="mailto:mindsphere.work@gmail.com" class="social-link" aria-label="Email MindSphere">
+                        <i class="fas fa-envelope"></i>
+                    </a>
                 </div>
             </div>
+            
             <div class="footer-col">
                 <h3>Quick Links</h3>
-                <a href="/">Home</a>
-                <a href="{{ url_for('register') }}">Take Assessment</a>
-                <a href="/#features">How it Works</a>
-                <a href="/#about">About Us</a>
+                <div class="footer-links">
+                    <a href="/"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Home</a>
+                    <a href="{{ url_for('dashboard') if current_user.is_authenticated else url_for('register') }}"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Take Assessment</a>
+                    <a href="/#features"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> How it Works</a>
+                    <a href="/#about"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> About Us</a>
+                </div>
             </div>
+
             <div class="footer-col">
                 <h3>Legal & Help</h3>
-                <a href="{{ url_for('legal') }}#privacy">Privacy Policy</a>
-                <a href="{{ url_for('legal') }}#terms">Terms of Service</a>
-                <a href="{{ url_for('legal') }}#disclaimer" style="color: #ef4444;">Medical Disclaimer</a>
-                <a href="/#feedback">Feedback</a>
+                <div class="footer-links">
+                    <a href="{{ url_for('legal') }}#privacy"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Privacy Policy</a>
+                    <a href="{{ url_for('legal') }}#terms"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Terms of Service</a>
+                    <a href="{{ url_for('legal') }}#disclaimer" style="color: #f87171;"><i class="fas fa-exclamation-triangle" style="font-size: 0.75rem;"></i> Medical Disclaimer</a>
+                    <a href="/#feedback"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Send Feedback</a>
+                </div>
             </div>
         </div>
-        <div class="copyright">
-            &copy; 2026 MindSphere Project. All Rights Reserved. Designed for Major Project.
+
+        <div class="container">
+            <div class="copyright">
+                &copy; 2026 MindSphere Project. All Rights Reserved. AI Mental Health Intelligence Platform.
+            </div>
         </div>
     </footer>
 
+    <!-- Global Mobile Menu & Interactive Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('navToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const navBackdrop = document.getElementById('navBackdrop');
+
+            function toggleMenu() {
+                const isOpen = mobileMenu.classList.contains('is-open');
+                if (isOpen) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            }
+
+            function openMenu() {
+                navToggle.classList.add('is-active');
+                navToggle.setAttribute('aria-expanded', 'true');
+                mobileMenu.classList.add('is-open');
+                navBackdrop.classList.add('is-open');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            }
+
+            function closeMenu() {
+                navToggle.classList.remove('is-active');
+                navToggle.setAttribute('aria-expanded', 'false');
+                mobileMenu.classList.remove('is-open');
+                navBackdrop.classList.remove('is-open');
+                document.body.style.overflow = '';
+            }
+
+            if (navToggle) {
+                navToggle.addEventListener('click', toggleMenu);
+            }
+
+            if (navBackdrop) {
+                navBackdrop.addEventListener('click', closeMenu);
+            }
+
+            // Close on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('is-open')) {
+                    closeMenu();
+                }
+            });
+
+            // Close menu when a link inside is clicked
+            const mobileLinks = document.querySelectorAll('.mobile-nav-link, .mobile-cta-btn');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+
+            // Auto-dismiss alerts after 6 seconds
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    alert.style.transform = 'translateY(-8px)';
+                    alert.style.transition = 'all 0.4s ease';
+                    setTimeout(() => alert.remove(), 400);
+                }, 6000);
+            });
+        });
+    </script>
 </body>
 </html>

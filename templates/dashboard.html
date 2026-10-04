@@ -1,38 +1,69 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container" style="max-width: 800px;">
-    <div class="text-center" style="margin-bottom: 3rem;">
-        <h1 style="margin-bottom: 0.5rem;">Mental Wellness Assessment</h1>
-        <p style="color: var(--text-gray);">Please answer honestly. Your data is analyzed by our advanced XGBoost Model.</p>
+<div class="container container-md" style="padding-top: 1.5rem;">
+    
+    <!-- Assessment Header -->
+    <div class="text-center" style="margin-bottom: 2rem;">
+        <span class="badge badge-success" style="margin-bottom: 0.75rem;">
+            <i class="fas fa-shield-alt"></i> Confidential & Secure
+        </span>
+        <h1 style="font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; color: var(--dark); margin-bottom: 0.5rem;">
+            Mental Wellness Assessment
+        </h1>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1rem;">
+            Please answer each question honestly. Your inputs are evaluated by our CatBoost machine learning model to estimate stress and wellness indicators.
+        </p>
     </div>
 
-    <form method="POST">
+    <!-- Live Progress Bar -->
+    <div class="assessment-progress-wrapper">
+        <div class="assessment-progress-inner">
+            <div class="assessment-progress-bar-bg">
+                <div class="assessment-progress-bar-fill" id="progressBar"></div>
+            </div>
+            <span class="assessment-progress-text" id="progressText">0 of 16 Answered</span>
+        </div>
+    </div>
+
+    <form method="POST" id="assessmentForm">
         
-        <!-- Section 1: Demographics -->
-        <h3 style="color: var(--primary); margin-bottom: 1rem; border-bottom: 2px solid var(--primary-light); padding-bottom: 0.5rem;">1. Personal Details</h3>
+        <!-- SECTION 1: DEMOGRAPHICS -->
+        <div class="assessment-section-title">
+            <i class="fas fa-user-circle"></i>
+            <span>1. Personal & Professional Details</span>
+        </div>
         
-        <!-- NEW AGE QUESTION -->
+        <!-- Question 1: Age -->
         <div class="question-card">
-            <div class="q-number">1</div>
-            <label>What is your Age?</label>
-            <input type="number" name="age" required min="10" max="100" placeholder="e.g. 25">
+            <div class="question-header">
+                <span class="q-number">1</span>
+                <label for="input-age">What is your Age?</label>
+            </div>
+            <input type="number" id="input-age" name="age" required min="10" max="100" placeholder="Enter age (e.g. 25)" class="form-input">
         </div>
 
+        <!-- Question 2: Gender -->
         <div class="question-card">
-            <div class="q-number">2</div>
-            <label>Gender</label>
-            <select name="gender" required>
-                <option value="" disabled selected>Select Gender</option>
+            <div class="question-header">
+                <span class="q-number">2</span>
+                <label for="input-gender">Gender</label>
+            </div>
+            <select id="input-gender" name="gender" required class="form-input">
+                <option value="" disabled selected>Select your gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
             </select>
         </div>
 
+        <!-- Question 3: Country -->
         <div class="question-card">
-            <div class="q-number">3</div>
-            <label>Country of Residence</label>
-            <select name="country" required>
+            <div class="question-header">
+                <span class="q-number">3</span>
+                <label for="input-country">Country of Residence</label>
+            </div>
+            <select id="input-country" name="country" required class="form-input">
+                <option value="" disabled selected>Select your country</option>
                 <option value="United States">United States</option>
                 <option value="United Kingdom">United Kingdom</option>
                 <option value="Canada">Canada</option>
@@ -44,146 +75,245 @@
             </select>
         </div>
 
+        <!-- Question 4: Occupation -->
         <div class="question-card">
-            <div class="q-number">4</div>
-            <label>Occupation Type</label>
-            <select name="occupation" required>
-                <option value="Corporate">Corporate</option>
+            <div class="question-header">
+                <span class="q-number">4</span>
+                <label for="input-occupation">Occupation Type</label>
+            </div>
+            <select id="input-occupation" name="occupation" required class="form-input">
+                <option value="" disabled selected>Select primary occupation</option>
+                <option value="Corporate">Corporate / Tech</option>
                 <option value="Student">Student</option>
-                <option value="Business">Business</option>
-                <option value="Housewife">Housewife</option>
+                <option value="Business">Business / Entrepreneur</option>
+                <option value="Housewife">Homemaker / Housewife</option>
                 <option value="Others">Others</option>
             </select>
         </div>
 
+        <!-- Question 5: Self Employed -->
         <div class="question-card">
-            <div class="q-number">5</div>
-            <label>Are you self-employed?</label>
-            <select name="self_employed" required>
+            <div class="question-header">
+                <span class="q-number">5</span>
+                <label for="input-self-employed">Are you self-employed or freelance?</label>
+            </div>
+            <select id="input-self-employed" name="self_employed" required class="form-input">
+                <option value="" disabled selected>Select an option</option>
                 <option value="No">No</option>
                 <option value="Yes">Yes</option>
             </select>
         </div>
 
-        <!-- Section 2: Lifestyle & History -->
-        <h3 style="color: var(--primary); margin-top: 3rem; margin-bottom: 1rem; border-bottom: 2px solid var(--primary-light); padding-bottom: 0.5rem;">2. Lifestyle & History</h3>
+        <!-- SECTION 2: LIFESTYLE & HISTORY -->
+        <div class="assessment-section-title">
+            <i class="fas fa-heart-pulse"></i>
+            <span>2. Lifestyle & Health Background</span>
+        </div>
 
+        <!-- Question 6: Family History -->
         <div class="question-card">
-            <div class="q-number">6</div>
-            <label>Family History of Mental Illness?</label>
-            <select name="family_history" required>
+            <div class="question-header">
+                <span class="q-number">6</span>
+                <label for="input-family-history">Family history of mental health challenges?</label>
+            </div>
+            <select id="input-family-history" name="family_history" required class="form-input">
+                <option value="" disabled selected>Select an option</option>
                 <option value="No">No</option>
                 <option value="Yes">Yes</option>
             </select>
         </div>
 
+        <!-- Question 7: Days Indoors -->
         <div class="question-card">
-            <div class="q-number">7</div>
-            <label>How often do you stay indoors?</label>
-            <select name="days_indoors" required>
-                <option value="1-14 days">1-14 days</option>
-                <option value="15-30 days">15-30 days</option>
-                <option value="31-60 days">31-60 days</option>
+            <div class="question-header">
+                <span class="q-number">7</span>
+                <label for="input-days-indoors">How often do you stay indoors without outside activity?</label>
+            </div>
+            <select id="input-days-indoors" name="days_indoors" required class="form-input">
+                <option value="" disabled selected>Select your typical duration</option>
+                <option value="1-14 days">1 to 14 days</option>
+                <option value="15-30 days">15 to 30 days</option>
+                <option value="31-60 days">31 to 60 days</option>
                 <option value="More than 2 months">More than 2 months</option>
-                <option value="Go out Every day">Go out Every day</option>
+                <option value="Go out Every day">Go out every day</option>
             </select>
         </div>
         
+        <!-- Question 8: Growing Stress -->
         <div class="question-card">
-            <div class="q-number">8</div>
-            <label>Have you noticed growing stress recently?</label>
-            <select name="growing_stress" required>
+            <div class="question-header">
+                <span class="q-number">8</span>
+                <label for="input-growing-stress">Have you noticed growing stress or pressure recently?</label>
+            </div>
+            <select id="input-growing-stress" name="growing_stress" required class="form-input">
+                <option value="" disabled selected>Select an option</option>
+                <option value="No">No</option>
+                <option value="Maybe">Maybe / Somewhat</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
+
+        <!-- Question 9: Habits Change -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-number">9</span>
+                <label for="input-changes-habits">Have you noticed sudden changes in sleep or eating habits?</label>
+            </div>
+            <select id="input-changes-habits" name="changes_habits" required class="form-input">
+                <option value="" disabled selected>Select an option</option>
                 <option value="No">No</option>
                 <option value="Maybe">Maybe</option>
                 <option value="Yes">Yes</option>
             </select>
         </div>
 
+        <!-- SECTION 3: EMOTIONAL WELL-BEING -->
+        <div class="assessment-section-title">
+            <i class="fas fa-brain"></i>
+            <span>3. Emotional Well-being & Coping</span>
+        </div>
+
+        <!-- Question 10: Past Mental Health -->
         <div class="question-card">
-            <div class="q-number">9</div>
-            <label>Have you changed your habits (sleep/eating) lately?</label>
-            <select name="changes_habits" required>
+            <div class="question-header">
+                <span class="q-number">10</span>
+                <label for="input-mental-health-history">Do you have a personal history of mental health conditions?</label>
+            </div>
+            <select id="input-mental-health-history" name="mental_health_history" required class="form-input">
+                <option value="" disabled selected>Select an option</option>
                 <option value="No">No</option>
                 <option value="Maybe">Maybe</option>
                 <option value="Yes">Yes</option>
             </select>
         </div>
 
-        <!-- Section 3: Psychological Indicators -->
-        <h3 style="color: var(--primary); margin-top: 3rem; margin-bottom: 1rem; border-bottom: 2px solid var(--primary-light); padding-bottom: 0.5rem;">3. Emotional Well-being</h3>
-
+        <!-- Question 11: Mood Swings -->
         <div class="question-card">
-            <div class="q-number">10</div>
-            <label>Do you have a past history of mental health issues?</label>
-            <select name="mental_health_history" required>
+            <div class="question-header">
+                <span class="q-number">11</span>
+                <label for="input-mood-swings">How would you describe the intensity of your mood swings?</label>
+            </div>
+            <select id="input-mood-swings" name="mood_swings" required class="form-input">
+                <option value="" disabled selected>Select intensity</option>
+                <option value="Low">Low / Stable</option>
+                <option value="Medium">Medium / Periodic</option>
+                <option value="High">High / Frequent</option>
+            </select>
+        </div>
+
+        <!-- Question 12: Coping Struggles -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-number">12</span>
+                <label for="input-coping-struggles">Do you struggle with coping with routine day-to-day problems?</label>
+            </div>
+            <select id="input-coping-struggles" name="coping_struggles" required class="form-input">
+                <option value="" disabled selected>Select an option</option>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
+
+        <!-- Question 13: Work Interest -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="q-number">13</span>
+                <label for="input-work-interest">Is your interest in work, projects, or hobbies declining?</label>
+            </div>
+            <select id="input-work-interest" name="work_interest" required class="form-input">
+                <option value="" disabled selected>Select an option</option>
                 <option value="No">No</option>
                 <option value="Maybe">Maybe</option>
                 <option value="Yes">Yes</option>
             </select>
         </div>
 
+        <!-- Question 14: Social Weakness -->
         <div class="question-card">
-            <div class="q-number">11</div>
-            <label>How intense are your mood swings?</label>
-            <select name="mood_swings" required>
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-            </select>
-        </div>
-
-        <div class="question-card">
-            <div class="q-number">12</div>
-            <label>Do you struggle with coping with daily problems?</label>
-            <select name="coping_struggles" required>
-                <option value="No">No</option>
-                <option value="Yes">Yes</option>
-            </select>
-        </div>
-
-        <div class="question-card">
-            <div class="q-number">13</div>
-            <label>Is your work interest declining?</label>
-            <select name="work_interest" required>
+            <div class="question-header">
+                <span class="q-number">14</span>
+                <label for="input-social-weakness">Do you feel drained or uncomfortable in social interactions?</label>
+            </div>
+            <select id="input-social-weakness" name="social_weakness" required class="form-input">
+                <option value="" disabled selected>Select an option</option>
                 <option value="No">No</option>
                 <option value="Maybe">Maybe</option>
                 <option value="Yes">Yes</option>
             </select>
         </div>
 
+        <!-- Question 15: Interview Willingness -->
         <div class="question-card">
-            <div class="q-number">14</div>
-            <label>Do you feel weak in social interactions?</label>
-            <select name="social_weakness" required>
+            <div class="question-header">
+                <span class="q-number">15</span>
+                <label for="input-mental-health-interview">Would you be willing to discuss mental health with a counselor or in an interview?</label>
+            </div>
+            <select id="input-mental-health-interview" name="mental_health_interview" required class="form-input">
+                <option value="" disabled selected>Select an option</option>
                 <option value="No">No</option>
                 <option value="Maybe">Maybe</option>
                 <option value="Yes">Yes</option>
             </select>
         </div>
 
+        <!-- Question 16: Care Options Awareness -->
         <div class="question-card">
-            <div class="q-number">15</div>
-            <label>Would you be willing to bring this up in an interview?</label>
-            <select name="mental_health_interview" required>
-                <option value="No">No</option>
-                <option value="Maybe">Maybe</option>
-                <option value="Yes">Yes</option>
-            </select>
-        </div>
-
-        <div class="question-card">
-            <div class="q-number">16</div>
-            <label>Are you aware of mental health care options?</label>
-            <select name="care_options" required>
+            <div class="question-header">
+                <span class="q-number">16</span>
+                <label for="input-care-options">Are you aware of mental health care and counseling resources available to you?</label>
+            </div>
+            <select id="input-care-options" name="care_options" required class="form-input">
+                <option value="" disabled selected>Select an option</option>
                 <option value="No">No</option>
                 <option value="Not sure">Not sure</option>
                 <option value="Yes">Yes</option>
             </select>
         </div>
 
-        <button type="submit" class="btn-primary" style="margin-top: 2rem; margin-bottom: 2rem;">
-            <i class="fas fa-chart-line"></i> Generate AI Analysis
-        </button>
+        <!-- Submit Button -->
+        <div style="margin-top: 2.5rem; margin-bottom: 4rem;">
+            <button type="submit" class="btn btn-primary btn-lg btn-full" id="submitBtn">
+                <i class="fas fa-chart-line"></i> Generate AI Analysis Report
+            </button>
+        </div>
     </form>
 </div>
+
+<!-- Assessment Progress Tracking Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('assessmentForm');
+        const inputs = form.querySelectorAll('.form-input');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const total = inputs.length;
+
+        function updateProgress() {
+            let filled = 0;
+            inputs.forEach(input => {
+                if (input.value && input.value.trim() !== '') {
+                    filled++;
+                }
+            });
+            const percent = Math.round((filled / total) * 100);
+            progressBar.style.width = percent + '%';
+            progressText.textContent = `${filled} of ${total} Answered (${percent}%)`;
+        }
+
+        inputs.forEach(input => {
+            input.addEventListener('change', updateProgress);
+            input.addEventListener('input', updateProgress);
+        });
+
+        // Initialize on load
+        updateProgress();
+
+        // Loading state on submit
+        form.addEventListener('submit', function() {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running Machine Learning Model...';
+        });
+    });
+</script>
 {% endblock %}

@@ -1,134 +1,154 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
-    <div class="card" id="printableArea">
+<div class="container container-md" style="padding-top: 1.5rem;">
+    
+    <div class="report-card" id="printableArea">
         
-        <!-- REPORT HEADER (Visible in PDF) -->
+        <!-- REPORT HEADER (Visible in Print / PDF) -->
         <div class="result-header">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="text-align: left;">
-                    <h2 style="color: var(--primary); margin: 0;">MindSphere <span style="color: black; font-weight: 300;">Report</span></h2>
-                    <p style="margin: 0; font-size: 0.9rem; color: #666;">AI-Powered Mental Health Assessment</p>
+            <div class="result-header-flex">
+                <div class="result-header-left">
+                    <h2>
+                        <div class="brand-icon" style="width: 32px; height: 32px; font-size: 0.95rem; display: inline-flex;">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        MindSphere <span style="color: var(--dark); font-weight: 300;">Report</span>
+                    </h2>
+                    <p>AI-Powered Mental Health & Well-being Assessment</p>
                 </div>
-                <div style="text-align: right; font-size: 0.9rem;">
-                    <p style="margin: 0;"><strong>User:</strong> {{ current_user.username }}</p>
-                    <p style="margin: 0;"><strong>Date:</strong> {{ timestamp }}</p>
-                    <p style="margin: 0;"><strong>Ref ID:</strong> #MS-{{ range(1000, 9999) | random }}</p>
+                
+                <div class="result-meta-box">
+                    <p><strong>User:</strong> {{ current_user.username }}</p>
+                    <p><strong>Date:</strong> {{ timestamp }}</p>
+                    <p><strong>Ref ID:</strong> #MS-{{ range(1000, 9999) | random }}</p>
                 </div>
             </div>
         </div>
 
-        <!-- MAIN SCORE -->
-        <div class="text-center">
-            <h3 style="margin-bottom: 1rem;">Risk Analysis Result</h3>
+        <!-- MAIN SCORE DISPLAY -->
+        <div class="score-display-card">
+            <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem;">
+                Risk Analysis Result
+            </h3>
             
             <div class="score-circle" style="border-color: var(--{{ result.color }}); color: var(--{{ result.color }});">
                 {{ result.score }}
-                <span style="font-size: 1rem; font-weight: 600; color: #666;">RISK SCORE</span>
+                <span class="score-label">RISK SCORE</span>
             </div>
             
-            <div class="badge badge-{{ result.level }}" style="font-size: 1.2rem; padding: 0.5rem 1.5rem;">
-                {{ result.level }} SEVERITY
+            <div style="margin-bottom: 1.25rem;">
+                <span class="badge badge-{{ result.level }}" style="font-size: 1rem; padding: 0.5rem 1.5rem;">
+                    <i class="fas fa-circle-dot" style="font-size: 0.75rem;"></i>
+                    {{ result.level }} SEVERITY
+                </span>
             </div>
             
-            <p style="font-size: 1.1rem; max-width: 600px; margin: 1.5rem auto;">
+            <p style="font-size: 1.1rem; color: var(--text-main); max-width: 600px; margin: 0 auto; line-height: 1.6;">
                 {{ result.message }}
             </p>
         </div>
 
         <!-- DETAILED ADVICE SECTION -->
         <div class="advice-box">
-            <h3 style="color: var(--primary-dark); margin-top: 0;"><i class="fas fa-user-md"></i> Recommended Actions</h3>
-            <ul style="padding-left: 1.2rem; margin-bottom: 0;">
+            <h3><i class="fas fa-user-doctor"></i> Recommended Action Steps</h3>
+            <ul>
                 {% if result.score < 30 %}
-                    <li><strong>Maintenance:</strong> Continue your current routine. Your responses indicate a balanced state.</li>
-                    <li><strong>Proactive:</strong> Consider mindfulness apps to maintain this balance during future stress.</li>
-                    <li><strong>Social:</strong> Keep engaging with your friends and family regularly.</li>
+                    <li><strong>Maintenance & Balance:</strong> Your responses indicate a healthy, balanced state. Continue with your current sleep and physical activity routines.</li>
+                    <li><strong>Proactive Mindfulness:</strong> Engage with mindfulness or breathing exercises periodically to sustain resilience during future periods of high pressure.</li>
+                    <li><strong>Social Connection:</strong> Maintain regular contact with friends, family, and peers to preserve strong emotional support systems.</li>
                 {% elif result.score < 60 %}
-                    <li><strong>Stress Management:</strong> You are showing signs of strain. Try the 'Pomodoro technique' for work breaks.</li>
-                    <li><strong>Monitor Habits:</strong> Watch for changes in sleep or appetite, as these are early warning signs.</li>
-                    <li><strong>Activity:</strong> Ensure you get at least 30 mins of walking daily to clear your mind.</li>
+                    <li><strong>Active Stress Management:</strong> You are displaying moderate indicators of emotional strain. Integrate short structured breaks (such as the 25-minute Pomodoro method) into your daily routine.</li>
+                    <li><strong>Monitor Lifestyle Habits:</strong> Pay close attention to subtle changes in your sleep patterns or appetite, which often act as early warning indicators of stress.</li>
+                    <li><strong>Physical Activity:</strong> Commit to at least 20–30 minutes of light outdoor walking or gentle exercise daily to improve mood regulation.</li>
                 {% else %}
-                    <li><strong>Professional Help:</strong> We strongly recommend consulting a therapist or counselor.</li>
-                    <li><strong>Immediate Relief:</strong> Practice 'Box Breathing' (Inhale 4s, Hold 4s, Exhale 4s).</li>
-                    <li><strong>Support:</strong> Do not isolate yourself. Talk to a trusted family member immediately.</li>
+                    <li><strong>Professional Consultation Recommended:</strong> We strongly advise reaching out to a certified counselor, therapist, or mental healthcare professional for comprehensive support.</li>
+                    <li><strong>Immediate De-escalation:</strong> Practice Box Breathing exercises (Inhale for 4s, Hold for 4s, Exhale for 4s, Hold for 4s) when experiencing heightened tension.</li>
+                    <li><strong>Reach Out Today:</strong> Do not isolate yourself. Speak openly with a trusted loved one, colleague, or local helpline specialist about how you feel.</li>
                 {% endif %}
             </ul>
         </div>
 
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 2rem 0;">
-
-        <!-- CHARTS & DATA -->
-        <div class="grid-3" style="grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 0;">
-            <div>
-                <h4 style="margin-top: 0;">Contributing Factors (SHAP)</h4>
-                <p style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">
-                    Red bars pushed your risk score UP. Blue bars pulled it DOWN.
+        <!-- CHARTS & SUMMARY SECTION -->
+        <div class="result-grid">
+            <!-- SHAP Plot Column -->
+            <div class="shap-container">
+                <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--dark); margin-bottom: 0.35rem;">
+                    Contributing Factors (SHAP)
+                </h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                    Red bars pushed your risk score <strong style="color: var(--danger);">HIGHER</strong>. Blue bars pulled it <strong style="color: var(--primary);">LOWER</strong>.
                 </p>
-                <!-- Check if plot_url exists before displaying -->
+                
                 {% if plot_url %}
-                    <img src="data:image/png;base64,{{ plot_url }}" style="width: 100%; border-radius: 8px; border: 1px solid #eee;">
+                    <img src="data:image/png;base64,{{ plot_url }}" alt="SHAP Feature Importance Plot" style="width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
                 {% else %}
-                    <div style="padding: 20px; background: #f8f9fa; text-align: center; border-radius: 8px;">
-                        Plot not available for this entry.
+                    <div style="padding: 2.5rem 1rem; background: var(--slate-100); text-align: center; border-radius: var(--radius-md); color: var(--text-muted);">
+                        <i class="fas fa-chart-bar" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.5;"></i>
+                        <p style="margin: 0;">Feature plot is being generated or was not available for this session.</p>
                     </div>
                 {% endif %}
             </div>
             
-            <!-- FIXED DATA SUMMARY TABLE -->
+            <!-- Profile Summary Column -->
             <div>
-                <h4 style="margin-top: 0;">Profile Summary</h4>
-                <table style="width: 100%; font-size: 0.9rem;">
-                    <!-- Row 1 -->
-                    <tr>
-                        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">Age / Gender</td>
-                        <td style="text-align: right;"><b>{{ input.Age }} / {{ input.Gender }}</b></td>
-                    </tr>
-                    <!-- Row 2 -->
-                    <tr>
-                        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">Occupation</td>
-                        <td style="text-align: right;"><b>{{ input.Occupation }}</b></td>
-                    </tr>
-                    <!-- Row 3 -->
-                    <tr>
-                        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">Days Indoors</td>
-                        <td style="text-align: right;"><b>{{ input.Days_Indoors }}</b></td>
-                    </tr>
-                    <!-- Row 4 -->
-                    <tr>
-                        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">Growing Stress</td>
-                        <td style="text-align: right;">
-                            <span class="badge" style="background: {{ '#fee2e2' if input.Growing_Stress == 'Yes' else '#f1f5f9' }};">
+                <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--dark); margin-bottom: 0.35rem;">
+                    Profile Summary
+                </h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                    Key data points captured during this evaluation:
+                </p>
+                
+                <div class="profile-summary-box">
+                    <div class="summary-row">
+                        <span class="summary-label">Age / Gender</span>
+                        <span class="summary-value">{{ input.Age }} / {{ input.Gender }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Occupation</span>
+                        <span class="summary-value">{{ input.Occupation }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Days Indoors</span>
+                        <span class="summary-value">{{ input.Days_Indoors }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Growing Stress</span>
+                        <span class="summary-value">
+                            <span class="badge {{ 'badge-danger' if input.Growing_Stress == 'Yes' else 'badge-Minimal' }}">
                                 {{ input.Growing_Stress }}
                             </span>
-                        </td>
-                    </tr>
-                    <!-- Row 5 -->
-                    <tr>
-                        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">Mood Swings</td>
-                        <td style="text-align: right;"><b>{{ input.Mood_Swings }}</b></td>
-                    </tr>
-                    <!-- Row 6 -->
-                    <tr>
-                        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">Family History</td>
-                        <td style="text-align: right;"><b>{{ input.family_history }}</b></td>
-                    </tr>
-                </table>
+                        </span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Mood Swings</span>
+                        <span class="summary-value">{{ input.Mood_Swings }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Family History</span>
+                        <span class="summary-value">
+                            <span class="badge {{ 'badge-warning' if input.family_history == 'Yes' else 'badge-Minimal' }}">
+                                {{ input.family_history }}
+                            </span>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div style="background: #f1f5f9; padding: 1rem; border-radius: 0.5rem; margin-top: 2rem; font-size: 0.8rem; text-align: center; color: #64748b;">
-            <strong>Medical Disclaimer:</strong> This report is generated by an AI model and is for informational purposes only. It is not a clinical diagnosis.
+        <!-- Medical Disclaimer -->
+        <div style="background: var(--slate-100); padding: 1rem 1.25rem; border-radius: var(--radius-md); margin-top: 2rem; font-size: 0.825rem; text-align: center; color: var(--text-muted); line-height: 1.5; border: 1px solid var(--border-color);">
+            <strong style="color: var(--dark);"><i class="fas fa-triangle-exclamation"></i> Medical Disclaimer:</strong> 
+            This assessment is generated by an algorithmic AI model for educational and self-reflection purposes only. It does not replace clinical consultation, diagnostic evaluation, or personalized treatment from a qualified medical professional.
         </div>
     </div>
 
     <!-- ACTION BUTTONS (Hidden in Print) -->
-    <div class="text-center no-print" style="margin-top: 2rem; margin-bottom: 4rem;">
-        <button onclick="window.print()" class="btn-primary" style="width: auto; margin-right: 1rem;">
+    <div class="result-actions-bar no-print">
+        <button onclick="window.print()" class="btn btn-primary btn-lg">
             <i class="fas fa-print"></i> Download PDF Report
         </button>
-        <a href="{{ url_for('dashboard') }}" class="btn-primary btn-outline" style="width: auto; display: inline-block; text-decoration: none;">
-            Take New Assessment
+        <a href="{{ url_for('dashboard') }}" class="btn btn-outline btn-lg">
+            <i class="fas fa-redo"></i> Take New Assessment
         </a>
     </div>
 
